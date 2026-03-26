@@ -1,0 +1,38 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="icon_sv" x1="5%" y1="0%" x2="95%" y2="100%">
+      <stop offset="0%"   stop-color="#555555"/>
+      <stop offset="25%"  stop-color="#222222"/>
+      <stop offset="50%"  stop-color="#666666"/>
+      <stop offset="75%"  stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#333333"/>
+    </linearGradient>
+    <linearGradient id="icon_gd" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"  stop-color="#d4a94e"/>
+      <stop offset="100%" stop-color="#8a5e20"/>
+    </linearGradient>
+  </defs>
+
+  <path
+    d="M148,100 C148,128 127,150 98,150 C69,150 48,128 48,100 C48,72 69,50 98,50 C82,62 76,79 76,100 C76,122 88,138 106,138 C128,138 148,121 148,100 Z"
+    fill="none"
+    stroke="url(#icon_sv)"
+    stroke-width="8"
+    stroke-linejoin="round"
+  />
+
+  <line x1="148" y1="66"  x2="165" y2="54"  stroke="#c9a96e" stroke-width="1.2" opacity="0.9"/>
+  <line x1="165" y1="54"  x2="178" y2="78"  stroke="#c9a96e" stroke-width="1.2" opacity="0.9"/>
+  <line x1="178" y1="78"  x2="162" y2="102" stroke="#c9a96e" stroke-width="1.2" opacity="0.9"/>
+  <line x1="148" y1="66"  x2="178" y2="78"  stroke="#c9a96e" stroke-width="1.2" opacity="0.4"/>
+
+  <circle cx="148" cy="66"  r="5"   fill="url(#icon_gd)"/>
+  <circle cx="165" cy="54"  r="4"   fill="url(#icon_gd)"/>
+  <circle cx="178" cy="78"  r="5"   fill="url(#icon_gd)"/>
+  <circle cx="162" cy="102" r="4"   fill="url(#icon_gd)"/>
+
+  <circle cx="148" cy="64.5"  r="2"   fill="#f5e090" opacity="0.7"/>
+  <circle cx="165" cy="52.5"  r="1.5" fill="#f5e090" opacity="0.7"/>
+  <circle cx="178" cy="76.5"  r="2"   fill="#f5e090" opacity="0.7"/>
+  <circle cx="162" cy="100.5" r="1.5" fill="#f5e090" opacity="0.7"/>
+</svg>

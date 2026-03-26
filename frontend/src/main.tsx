@@ -1,10 +1,35 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.tsx'
+import { createBrowserRouter,RouterProvider,Navigate } from 'react-router-dom'
+import { FormPage } from './components/auth/FormPage'
+import { SignUp } from './components/auth/SignUp'
+import { LogIn } from './components/auth/LogIn'
+import CrescentPanel from './components/CrescentPanel'
+
+const router = createBrowserRouter([
+  {path:"/",
+    element:<Navigate to={'/signup'}/>
+  },
+  {
+    path:"/signup",
+     element:<FormPage><SignUp/></FormPage>
+  },
+  {
+    path:"/login",
+    element:<FormPage><LogIn/></FormPage>
+  },
+  {
+    path:"/lmao",
+    element:<CrescentPanel/>
+  }
+    
+]);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <RouterProvider router={router}/>
   </StrictMode>,
 )
+
+ 
