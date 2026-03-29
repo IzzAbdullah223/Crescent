@@ -19,11 +19,13 @@ export  function FormPage({children}:{children:React.ReactNode}){
                     <p className='text-gray-500'>Please fill in your login details</p>
                 } 
                 </div>
-                {children}
-                {pathname=='/signup'?
-                    <p className='text-gray-500 text-[0.9rem] self-start ml-11'>Already have an account? <Link to={'/login'} className='font-bold text-black hover:underline hover:decoration-1'>Login</Link></p>:
-                    <p className='text-gray-500 text-[0.9rem] self-start ml-11'>Don't have an account? <Link to={'/signup'} className='font-bold text-black hover:underline hover:decoration-1'>Sign up</Link></p>    
-            }
+                <div className='h-[450px]'> 
+                    {children}
+                    {pathname=='/signup'?
+                        <p className='text-gray-500 text-[0.9rem] mt-2'>Already have an account? <Link to={'/login'} className='font-bold text-black hover:underline hover:decoration-1'>Login</Link></p>:
+                        <p className='text-gray-500 text-[0.9rem] mt-2'>Don't have an account? <Link to={'/signup'} className='font-bold text-black hover:underline hover:decoration-1'>Sign up</Link></p>    
+                    }
+                </div>
                 <ContinueWithGoogle/>
             </div>
         </div>

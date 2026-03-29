@@ -1,9 +1,18 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../src/db/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+
+model User{
+  id Int @id @default(autoincrement())
+  username String @unique
+  displayname String
+  password String
+  pictureURL String @default("https://res.cloudinary.com/dic5sskvu/image/upload/v1771032844/defaultAvatar_szkhjs.webp")
 }

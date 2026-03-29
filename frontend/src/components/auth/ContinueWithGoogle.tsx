@@ -2,8 +2,8 @@ import google from '../../assets/google.svg'
 export  function ContinueWithGoogle(){
 
     return(
-        <div className=''> 
-                <div className='flex items-center w-70 gap-1 mb-5'>
+        <div className='w-70'> 
+                <div className='flex items-center  gap-1 mb-5'>
                     <div className=' flex-1 h-px bg-gray-700'></div>
                     <span className='text-gray-700'>or</span>
                     <div className=' flex-1 h-px bg-gray-700'></div>
