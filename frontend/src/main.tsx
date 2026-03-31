@@ -5,7 +5,8 @@ import { createBrowserRouter,RouterProvider,Navigate } from 'react-router-dom'
 import { FormPage } from './components/auth/FormPage'
 import { SignUp } from './components/auth/SignUp'
 import { LogIn } from './components/auth/LogIn'
-import CrescentPanel from './components/CrescentPanel'
+import { Home } from './components/pages/Home'
+import CrescentPanel from './components/ui/CrescentPanel'
 
 const router = createBrowserRouter([
   {path:"/",
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path:"/lmao",
     element:<CrescentPanel/>
+  },
+  {
+    path:"/home",
+    element:<Home/>
   }
     
 ]);

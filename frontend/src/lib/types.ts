@@ -12,3 +12,10 @@ export const signUpSchema = z.object({
 })
 
 export type TSignUpSchema = z.infer<typeof signUpSchema>
+
+export type user={
+    id:number,
+    username:string
+    displayname:string,
+    pictureURL:string
+}

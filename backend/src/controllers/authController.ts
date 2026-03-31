@@ -22,6 +22,8 @@ interface TokenPayload {
 
 
 export async function signUpPost(req:Request,res:Response){
+
+ 
  
      const body: unknown = req.body
      const result = signUpSchema.safeParse(body);
@@ -52,7 +54,6 @@ export async function signUpPost(req:Request,res:Response){
 
 export async function logInPost(req:Request,res:Response){
         const user=req.user
-        
         jwt.sign({user:user},process.env.SECRET_KEY as Secret,{expiresIn: '7d'},(err: Error | null, token: string | undefined)=>{
           res.json({
                 token

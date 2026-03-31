@@ -2,8 +2,11 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type TSignUpSchema, signUpSchema} from '../../lib/types';
 import { signUp } from '../../services/authServices';
+import { useNavigate } from 'react-router-dom';
 import loading from '../../assets/loading.svg'
 export function SignUp(){
+
+  const navigate = useNavigate()
 
     const{
         register,
@@ -16,7 +19,15 @@ export function SignUp(){
 
     const onSubmit= async (data:TSignUpSchema)=>{
       const response = await signUp(data)
-      console.log(response)
+      if(response.errors){
+        const errors = response.errors
+        if(errors.username){
+          setError("username",{type:"server",message: errors.username})
+        }
+      }
+      else{
+        navigate('/home')
+      }
 
     }
   

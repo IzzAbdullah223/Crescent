@@ -9,10 +9,24 @@ export async function signUp(data:TSignUpSchema){
      })
 
     const responseData =  await response.json()
-    console.log(responseData)
     if(!response.ok){
         return {success:false,errors:responseData.errors}
     }
 
     return {success:true}
 }
+
+export async function logIn(data: { username: string; password: string }){
+
+    
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/login`,{
+        method:"POST",
+        headers:{'content-Type': 'application/json'},
+        body:JSON.stringify({
+            username: data.username,
+            password: data.password
+        })
+    })
+    return response;
+}
+
