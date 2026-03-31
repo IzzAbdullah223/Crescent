@@ -1,5 +1,7 @@
 import {type Response, type Request, type NextFunction} from 'express'
 import jwt,{type JwtPayload, type Secret} from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
+import * as db from '../db/queries.js'
 import { signUpSchema } from '../libs/types.js';
 
 declare global{
@@ -26,14 +28,25 @@ export async function signUpPost(req:Request,res:Response){
    
  
     if(!result.success){
-         return res.status(500).json({
+         return res.status(400).json({
             success:"Failed to create account"
          })
         }
-        
-   
+
+    const exisitngUser = await db.findUserByUsername(result.data.username)
+
+    if(exisitngUser){
+        return res.status(400).json({errors:{username:"Username already exists"}})
+    }
+
+    const hashedPassword = await bcrypt.hash(result.data.password,10)
+    
+
+    await db.signUp(result.data.username,result.data.displayname,hashedPassword)
+
+
      return res.status(200).json({
-        sucess:true
+        success:true
      })
 }
 
