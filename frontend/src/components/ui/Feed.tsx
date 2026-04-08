@@ -12,6 +12,8 @@ export function Feed(){
         user()
     },[])
 
+    const[currentFeed,setCurrentFeed]=useState(true)
+
 
 
     const user = async ()=>{
@@ -26,7 +28,12 @@ export function Feed(){
          }
     }
     return(
-        <div className="border-t border-gray-400/20 flex-1 overflow-y-auto">
+        <div className="overflow-y-auto font-Alata   tab:border-x tab:border-gray-400/20 max-w-[750px] w-full  ">
+
+            <div className="flex items-center justify-center gap-4 text-[1.2rem]  border-b border-gray-400/20 w-full p-3">
+                <div className={`${currentFeed? 'border-b-[3px] border-[#e66c47] rounded-sm':''}`}>Recent</div>
+                <div className={`${currentFeed? '':'border-b-[3px] border-[#e66c47] rounded-sm'}`}>Following</div>
+            </div>
 
             <div className='flex flex-col gap-4 hover:bg-white/10 pb-10 p-4 cursor-pointer'> 
 
