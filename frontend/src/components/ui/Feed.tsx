@@ -4,6 +4,7 @@ import {type user} from '../../lib/types'
 import likes from '../../assets/likes.svg'
 import comments from '../../assets/comment2.svg'
 import { Link } from 'react-router-dom'
+import { FeedSideBar } from './FeedSideBar'
 
 export function Feed(){
 
@@ -28,6 +29,7 @@ export function Feed(){
          }
     }
     return(
+        <div className='flex flex-row w-full'> 
         <div className="w-full overflow-y-auto font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
 
             <div className="flex items-center justify-center gap-4 text-[1.2rem]  border-b border-gray-400/15 w-full p-4">
@@ -162,7 +164,9 @@ export function Feed(){
 
 
 
-
+ 
+        </div>
+        <FeedSideBar/>
         </div>
     )
 }

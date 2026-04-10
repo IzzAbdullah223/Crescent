@@ -8,6 +8,7 @@ import { LogIn } from './components/auth/LogIn'
 import { Home } from './components/pages/Home'
 import CrescentPanel from './components/ui/CrescentPanel'
 
+
 const router = createBrowserRouter([
   {path:"/",
     element:<Navigate to={'/signup'}/>
