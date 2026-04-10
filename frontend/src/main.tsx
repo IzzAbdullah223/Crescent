@@ -5,33 +5,28 @@ import { createBrowserRouter,RouterProvider,Navigate } from 'react-router-dom'
 import { FormPage } from './components/auth/FormPage'
 import { SignUp } from './components/auth/SignUp'
 import { LogIn } from './components/auth/LogIn'
-import { Home } from './components/pages/Home'
-import CrescentPanel from './components/ui/CrescentPanel'
+import { AppLayout } from './layouts/AppLayout'
+import { Feed } from './components/pages/Feed'
+import { CreatePost } from './components/pages/CreatePost'
+//import CrescentPanel from './components/ui/CrescentPanel'
 
+
+ 
 
 const router = createBrowserRouter([
-  {path:"/",
-    element:<Navigate to={'/signup'}/>
-  },
+  { path: "/", element: <Navigate to="/signup"/> },
+  { path: "/signup", element: <FormPage><SignUp/></FormPage> },
+  { path: "/login", element: <FormPage><LogIn/></FormPage> },
+
   {
-    path:"/signup",
-     element:<FormPage><SignUp/></FormPage>
+    path: "/",
+    element: <AppLayout/>,
+    children: [
+      { path: "home", element: <Feed/> },
+      { path: "create", element: <CreatePost/> },
+    ]
   },
-  {
-    path:"/login",
-    element:<FormPage><LogIn/></FormPage>
-  },
-  {
-    path:"/lmao",
-    element:<CrescentPanel/>
-  },
-  {
-    path:"/home",
-    element:<Home/>
-  },
- 
-    
-]);
+])
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
