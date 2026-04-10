@@ -4,6 +4,7 @@
 @import "tailwindcss";
 
 @custom-variant tab (@media (min-width: 481px) and (max-width: 980px));
+@custom-variant desk (@media (min-width: 981px));
 @theme {
     --font-Inter: "Inter", sans-serif;
 }
@@ -15,4 +16,5 @@
 @theme{
     --font-Google: "Google Sans Flex", sans-serif;
 }
- 
+
+

@@ -28,7 +28,7 @@ export function Header(){
  
 
     return(
-        <div className='flex items-center justify-between font-Alata border-b border-gray-400/20'>
+        <div className='flex items-center justify-between font-Alata border-b border-gray-400/20 p-1 '>
             <div className='flex items-center gap-2'>
                 <img src={crescent} className='size-15'/>
                 <h1 className='text-lg'>Crescent </h1>

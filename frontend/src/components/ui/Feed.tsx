@@ -28,9 +28,9 @@ export function Feed(){
          }
     }
     return(
-        <div className="overflow-y-auto font-Alata   tab:border-x tab:border-gray-400/20 max-w-[750px] w-full  ">
+        <div className="w-full overflow-y-auto font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
 
-            <div className="flex items-center justify-center gap-4 text-[1.2rem]  border-b border-gray-400/20 w-full p-3">
+            <div className="flex items-center justify-center gap-4 text-[1.2rem]  border-b border-gray-400/15 w-full p-4">
                 <div className={`${currentFeed? 'border-b-[3px] border-[#e66c47] rounded-sm':''}`}>Recent</div>
                 <div className={`${currentFeed? '':'border-b-[3px] border-[#e66c47] rounded-sm'}`}>Following</div>
             </div>
