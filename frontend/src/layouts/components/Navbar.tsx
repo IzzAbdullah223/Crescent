@@ -22,11 +22,11 @@ export function NavBar(){
 
   return (
     <div className='flex items-center justify-around p-2 tab:pt-6 tab:flex-col  tab:order-first tab:justify-start tab:gap-6 tab:pr-4  tab:shrink-0 desk:pt-6 desk:flex-col desk:order-first desk:justify-start desk:gap-6 desk:pr-4 desk:shrink-0 '>
-      <NavLink to="/Home" className={({ isActive }) => navStyle(isActive)}>
+      <NavLink to="/home" className={({ isActive }) => navStyle(isActive)}>
         <img src={home} className='size-6'/>
       </NavLink>
 
-      <NavLink to="/Feed" className={({ isActive }) => navStyle(isActive)}>
+      <NavLink to="/create" className={({ isActive }) => navStyle(isActive)}>
         <img src={create} className='size-6'/>
       </NavLink>
 
