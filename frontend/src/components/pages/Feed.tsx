@@ -59,16 +59,17 @@ export function Feed(){
                 <div className={`${currentFeed? '':'border-b-[3px] border-[#e66c47] rounded-sm'}`}>Following</div>
             </div>
 
-            <div className='flex flex-col gap-4 hover:bg-white/10 pb-10 p-4 cursor-pointer'> 
+            {feed.map((post,index)=>(
+            <div className='flex flex-col gap-4 hover:bg-white/10 pb-10 p-4 cursor-pointer' key={index}> 
 
             <div className='flex items-center gap-2'>
-                <img src={currentUser?.pictureURL} className=' mr-2 size-8 rounded-full object-cover object-center'/>
-                <Link to={'/'} className='font-Alata hover:underline'>{currentUser?.username}</Link>
+                <img src={post.poster?.pictureURL} className=' mr-2 size-8 rounded-full object-cover object-center'/>
+                <Link to={'/'} className='font-Alata hover:underline'>{post.poster?.username}</Link>
                 <div className='text-[#565565] text-2xl'>•</div>
                 <div className='text-[#565565] text-balance'>15 hours ago</div>
             </div>
 
-            <div>Hey, what's up?</div>
+            <div>{post.content}</div>
 
             <div className='flex gap-4'>
                 {/* gonna have a conditn here to display either a red heart or no depend on likes*/}
@@ -83,7 +84,7 @@ export function Feed(){
             </div>
 
             </div>
-
+            ))}
  
         </div>
         <div className="p-3 hidden desk:block"> {/* from here this is the feedsidebar component we had */}
