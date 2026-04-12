@@ -16,6 +16,7 @@ model User{
   password String
   pictureURL String @default("https://res.cloudinary.com/dic5sskvu/image/upload/v1771032844/defaultAvatar_szkhjs.webp")
   posts Post[]
+  likes Like[]
 }
 
 model Post{
@@ -26,6 +27,17 @@ model Post{
   tags String[]
   poster User @relation(fields: [posterId],references: [id])
   posterId Int
+  likes Like[]
+}
+
+model Like{
+ id Int @id @default(autoincrement())
+ userId Int
+ postId Int
+ user User @relation(fields: [userId],references: [id])
+ post Post @relation(fields: [postId],references: [id])
+
+ @@unique([userId, postId])
 }
 
  
