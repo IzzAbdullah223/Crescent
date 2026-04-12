@@ -1,6 +1,7 @@
 import {z} from 'zod'
 
 
+
 export const signUpSchema = z.object({
     username: z.string().trim().min(2,'Username should be at least 2 characters.'),
     displayname:z.string().trim().min(1,'Username cannot be empty'),
@@ -23,8 +24,14 @@ export type user={
 export type postData={
     content?:string
     tags?:string[]
-    pictureURL?:string
+    pictureURL?:File | null
     githubRepo?:string
+}
+
+export type Like={
+    id:number,
+    userId:number,
+    postId:number
 }
 
 export type feedData={
@@ -37,4 +44,5 @@ export type feedData={
         displayname:string,
         pictureURL:string
     }
+    likes:Like[]
 }

@@ -36,14 +36,14 @@ export async function findUserByUsername(username:string){
 }
 
 export async function createPost(posterId:number,data:postData){
-    await prisma.post.create({
+   /* await prisma.post.create({
         data:{
             posterId:posterId,
             content:data.content ?? null,
             imageURL:data.pictureURL ?? null,
             tags:data.tags?? []
         }
-    })
+    })*/
 }
 
 export async function getPosts(){
@@ -55,6 +55,33 @@ export async function getPosts(){
                     displayname:true,
                     pictureURL:true,
                 }
+            },
+            likes:{
+                select:{
+                    userId:true,
+                    postId:true,
+                }
+            }
+        }
+        
+    })
+}
+
+export async function likePost(userId:number,postId:number){
+    await prisma.like.create({
+        data:{
+            userId:userId,
+            postId:postId
+        }
+    })
+}
+
+export async function unlikePost(userId:number,postId:number){
+    await prisma.like.delete({
+        where:{
+            userId_postId:{
+                userId:userId,
+                postId:postId
             }
         }
     })

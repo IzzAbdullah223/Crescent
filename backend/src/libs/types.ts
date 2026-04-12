@@ -13,6 +13,6 @@ export const signUpSchema = z.object({
 export type postData={
     content?:string
     tags?:string[]
-    pictureURL?:string
+    pictureURL?: File | null
     githubRepo?:string
 }

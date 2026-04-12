@@ -1,6 +1,6 @@
 import {type postData} from '../lib/types'
 
-export async function createPost(data:postData){
+export async function createPost(data:FormData){
 
     
  
@@ -9,10 +9,9 @@ export async function createPost(data:postData){
     const response = await fetch(`${import.meta.env.VITE_API_URL}/post`,{
         method:"POST",
         headers:{
-            'Content-Type':'application/json',
             'Authorization':`Bearer ${token}`
         },
-        body:JSON.stringify(data)
+        body:data
     })
 
     return response
@@ -24,6 +23,34 @@ export async function getPosts(){
         method:"GET"
     })
 
+ 
     return response
 
+}
+
+export async function likePost(postId:number){
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/post/like`,{
+        method:"POST",
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${token}`
+        },
+        body:JSON.stringify({postId})
+    })      
+    
+    return response
+}
+
+export async function unlikePost(postId:number){
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/post/unlike`,{
+        method:"POST",
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${token}`
+        },
+        body:JSON.stringify({postId})
+    })
+    return response
 }

@@ -13,7 +13,7 @@ export function CreatePost(){
     const [formData,setFormData]=useState<postData>({
         content:'',
         tags:[],
-        pictureURL:'',
+        pictureURL:null,
         githubRepo:'',
     })
 
@@ -34,6 +34,11 @@ export function CreatePost(){
         if (fileInputRef.current) fileInputRef.current.value = ""
         const imageUrl = URL.createObjectURL(file)
         setImagePreview(imageUrl)
+        setFormData(prev => ({
+            ...prev,
+            pictureURL:selectedFile
+        }))
+
   }
 
 
@@ -66,10 +71,14 @@ export function CreatePost(){
 }
     
     const handleSubmit = async (e:React.FormEvent) =>{
-      
         e.preventDefault()
-
-        const response = await  createPost(formData)
+        const data = new FormData()
+        data.append("content",formData.content ?? "")
+        data.append("githubRepo",formData.githubRepo ?? "")
+        data.append("tags",JSON.stringify(formData.tags ?? []))
+        if(formData.pictureURL) data.append("pictureURL",formData.pictureURL)
+            
+        const response = await  createPost(data)
         console.log(response)
     }
 

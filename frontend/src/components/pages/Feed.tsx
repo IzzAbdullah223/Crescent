@@ -2,13 +2,17 @@ import { getUser } from '../../services/userServices'
 import { useEffect,useState } from 'react'
 import {type user} from '../../lib/types'
 import likes from '../../assets/likes.svg'
+import redHeart from '../../assets/redHeart.svg'
 import comments from '../../assets/comment2.svg'
 import { Link } from 'react-router-dom'
-import { getPosts } from '../../services/postServices'
+import { getPosts,likePost,unlikePost } from '../../services/postServices'
 import { type feedData } from '../../lib/types'
  
 
 export function Feed(){
+
+    const currentUserId= Number(localStorage.getItem('currentUserId'))
+    
 
     const[currentUser,setCurrentUser]=  useState<user>()
  
@@ -39,6 +43,17 @@ export function Feed(){
         }
     }
 
+    const like = async (postId:number)=>{
+      await likePost(postId)
+      posts()
+     
+    }
+
+    const unlike = async (postId:number) =>{
+       await unlikePost(postId)
+       posts()
+    }
+
     useEffect(()=>{
         const run = async ()=>{
             user()
@@ -47,9 +62,7 @@ export function Feed(){
         run()
     },[])
 
-    useEffect(()=>{
-
-    })
+   
     return(
         <div className='flex flex-row w-full'> 
         <div className="w-full overflow-y-auto font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
@@ -72,10 +85,13 @@ export function Feed(){
             <div>{post.content}</div>
 
             <div className='flex gap-4'>
-                {/* gonna have a conditn here to display either a red heart or no depend on likes*/}
+                 
                 <div className='flex items-center gap-1.5'>
-                    <img src={likes} className='size-6'/>
-                    <span>0</span>
+                    {post.likes.some(like => like.userId === currentUserId)
+                        ? <img src={redHeart} className='size-6' onClick={()=>unlike(post.id)}/>
+                        :<img src={likes} className='size-6' onClick={()=>like(post.id)}/>
+                    }
+                <span>{post.likes.length}</span>
                 </div>
                 <div className='flex items-center gap-1.5'> 
                     <img src={comments} className='size-6'/>
@@ -84,7 +100,13 @@ export function Feed(){
             </div>
 
             </div>
+
+
+
+
             ))}
+
+
  
         </div>
         <div className="p-3 hidden desk:block"> {/* from here this is the feedsidebar component we had */}
