@@ -1,9 +1,7 @@
-import {type postData} from '../lib/types'
+ 
 
 export async function createPost(data:FormData){
 
-    
- 
     const token = localStorage.getItem('token')
  
     const response = await fetch(`${import.meta.env.VITE_API_URL}/post`,{
@@ -13,7 +11,7 @@ export async function createPost(data:FormData){
         },
         body:data
     })
-
+    console.log(response)
     return response
 }
 

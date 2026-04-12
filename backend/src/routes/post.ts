@@ -8,7 +8,7 @@ export const postRouter = Router()
 
 
 postRouter.get('/post',getPosts)
-postRouter.post('/post',verifyToken,upload.single('image'),createPost)
+postRouter.post('/post',verifyToken,upload.single('media'),createPost)
 postRouter.post('/post/like',verifyToken,likePost)
 postRouter.post('/post/unlike',verifyToken,unlikePost)
 //postRouter.delete('/post')

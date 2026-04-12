@@ -13,14 +13,14 @@ export function CreatePost(){
     const [formData,setFormData]=useState<postData>({
         content:'',
         tags:[],
-        pictureURL:null,
+        mediaURL:null,
         githubRepo:'',
     })
 
     const [tagInput, setTagInput] = useState('')
     const [imagePreview, setImagePreview] = useState<string | undefined>(undefined)
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const [selectedFile, setSelectedFile] = useState<File | null>(null)
+    
 
     const HandleImageUpload = async () => {
         fileInputRef.current?.click()
@@ -30,13 +30,12 @@ export function CreatePost(){
         const file = e.target.files?.[0]
         if (!file) return
         if (imagePreview) URL.revokeObjectURL(imagePreview)
-        setSelectedFile(file)
         if (fileInputRef.current) fileInputRef.current.value = ""
         const imageUrl = URL.createObjectURL(file)
         setImagePreview(imageUrl)
         setFormData(prev => ({
             ...prev,
-            pictureURL:selectedFile
+            pictureURL:file
         }))
 
   }
@@ -76,7 +75,7 @@ export function CreatePost(){
         data.append("content",formData.content ?? "")
         data.append("githubRepo",formData.githubRepo ?? "")
         data.append("tags",JSON.stringify(formData.tags ?? []))
-        if(formData.pictureURL) data.append("pictureURL",formData.pictureURL)
+        if(formData.mediaURL) data.append("media",formData.mediaURL)
             
         const response = await  createPost(data)
         console.log(response)

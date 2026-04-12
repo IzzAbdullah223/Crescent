@@ -5,10 +5,4 @@ export declare const signUpSchema: z.ZodObject<{
     password: z.ZodString;
     confirmPassword: z.ZodString;
 }, z.z.core.$strip>;
-export type postData = {
-    content?: string;
-    tags?: string[];
-    pictureURL?: File | null;
-    githubRepo?: string;
-};
 //# sourceMappingURL=types.d.ts.map

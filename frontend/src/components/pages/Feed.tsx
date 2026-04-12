@@ -39,6 +39,7 @@ export function Feed(){
         const response = await getPosts()
         if(response.status===200){
             const responseData:feedData[] = await response.json()
+            console.log(responseData)
             setFeed(responseData)
         }
     }
@@ -82,7 +83,13 @@ export function Feed(){
                 <div className='text-[#565565] text-balance'>15 hours ago</div>
             </div>
 
-            <div>{post.content}</div>
+                            {post.content && (
+                              <p className="">{post.content}</p>
+                              
+                            )}
+                            {post.media && (
+                              <img src={post.media} className="max-w-[40rem] w-[100%] rounded-3xl mx-auto mb-8 bg-red-500" />
+                            )}
 
             <div className='flex gap-4'>
                  

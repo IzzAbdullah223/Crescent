@@ -1,5 +1,6 @@
 import { type Request, type Response } from 'express';
-import { type postData } from '../libs/types.js';
+ 
+import cloudinary from '../config/cloudinary.js'
 import * as db from '../db/queries.js'
  
 
@@ -11,13 +12,23 @@ export async function createPost(req:Request,res:Response){
             message:"Unauthorized"
         })
     }
-     
-    const posterId = req.user.id
-    const body:postData = req.body
-    console.log(body)
 
+    const posterId = req.user.id
+    const content = req.body.content as string
+    const githubRepo = req.body.githubRepo as string
+    const tags = JSON.parse(req.body.tags) as string[] || []
+    let media:string | null = null
+
+    
+ 
     try{
-       // await db.createPost(posterId,body)
+        if (req.file) {
+            const cloudinaryResult = await cloudinary.uploader.upload(req.file.path, {
+                resource_type: "auto" // change later on to auto when we allow videos and other media types
+            })
+      media = cloudinaryResult.secure_url
+    }
+        await db.createPost(posterId,content,tags,media,githubRepo)
         return res.status(201).json({
             message:"Post created"
         })

@@ -1,6 +1,5 @@
 import { prisma } from "./lib/prisma.js";
-import { type postData } from '../libs/types.js';
-
+ 
 export async function signUp(username:string,fName:string,password:string){
     
      await prisma.user.create({
@@ -35,15 +34,16 @@ export async function findUserByUsername(username:string){
     return existingUser
 }
 
-export async function createPost(posterId:number,data:postData){
-   /* await prisma.post.create({
+export async function createPost(posterId:number,content:string,tags:string[],media:string | null,githubRepo:string){
+    await prisma.post.create({
         data:{
             posterId:posterId,
-            content:data.content ?? null,
-            imageURL:data.pictureURL ?? null,
-            tags:data.tags?? []
+            content:content ?? null,
+            media:media ?? null,
+            githubRepo:githubRepo ?? null,
+            tags:tags
         }
-    })*/
+    })
 }
 
 export async function getPosts(){

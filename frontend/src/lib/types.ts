@@ -24,7 +24,7 @@ export type user={
 export type postData={
     content?:string
     tags?:string[]
-    pictureURL?:File | null
+    mediaURL?:File | null
     githubRepo?:string
 }
 
@@ -37,7 +37,7 @@ export type Like={
 export type feedData={
     id:number,
     content:string,
-    imageUrl:string,
+    media:string,
     tags:string[],
     poster:{
         username:string,

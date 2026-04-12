@@ -23,7 +23,8 @@ model Post{
   id Int @id @default(autoincrement())
   date DateTime @default(now())
   content String?
-  imageURL String?
+  mediaURL String?
+  githubRepo String?
   tags String[]
   poster User @relation(fields: [posterId],references: [id])
   posterId Int
