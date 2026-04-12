@@ -36,5 +36,26 @@ export async function findUserByUsername(username:string){
 }
 
 export async function createPost(posterId:number,data:postData){
+    await prisma.post.create({
+        data:{
+            posterId:posterId,
+            content:data.content ?? null,
+            imageURL:data.pictureURL ?? null,
+            tags:data.tags?? []
+        }
+    })
+}
 
+export async function getPosts(){
+    return await prisma.post.findMany({
+        include:{
+            poster:{
+                select:{
+                    username:true,
+                    displayname:true,
+                    pictureURL:true,
+                }
+            }
+        }
+    })
 }

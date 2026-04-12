@@ -26,3 +26,15 @@ export type postData={
     pictureURL?:string
     githubRepo?:string
 }
+
+export type feedData={
+    id:number,
+    content:string,
+    imageUrl:string,
+    tags:string[],
+    poster:{
+        username:string,
+        displayname:string,
+        pictureURL:string
+    }
+}

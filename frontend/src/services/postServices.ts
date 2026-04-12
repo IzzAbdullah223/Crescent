@@ -17,3 +17,13 @@ export async function createPost(data:postData){
 
     return response
 }
+
+export async function getPosts(){
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/post`,{
+        method:"GET"
+    })
+
+    return response
+
+}

@@ -23,6 +23,9 @@ model Post{
   date DateTime @default(now())
   content String?
   imageURL String?
+  tags String[]
   poster User @relation(fields: [posterId],references: [id])
   posterId Int
 }
+
+ 

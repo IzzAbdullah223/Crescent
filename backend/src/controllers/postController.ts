@@ -29,4 +29,17 @@ export async function createPost(req:Request,res:Response){
     
  
 }
+
+export async function getPosts(req:Request,res:Response){
+    try{
+        const posts = await db.getPosts()
+      
+        return res.status(200).json(posts)
+    }
+    catch(err){
+        return res.status(500).json({
+            message:"Internal server error"
+        })
+    }
+}
  
