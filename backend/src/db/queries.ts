@@ -1,4 +1,5 @@
 import { prisma } from "./lib/prisma.js";
+import { type postData } from '../libs/types.js';
 
 export async function signUp(username:string,fName:string,password:string){
     
@@ -32,4 +33,8 @@ export async function findUserByUsername(username:string){
         where:{username:username}
     })
     return existingUser
+}
+
+export async function createPost(posterId:number,data:postData){
+
 }

@@ -19,3 +19,10 @@ export type user={
     displayname:string,
     pictureURL:string
 }
+
+export type postData={
+    content?:string
+    tags?:string[]
+    pictureURL?:string
+    githubRepo?:string
+}

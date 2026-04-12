@@ -5,6 +5,7 @@
 
 @custom-variant tab (@media (min-width: 481px) and (max-width: 980px));
 @custom-variant desk (@media (min-width: 981px));
+@custom-variant 
 @theme {
     --font-Inter: "Inter", sans-serif;
 }

@@ -9,3 +9,10 @@ export const signUpSchema = z.object({
     message:"Password must match",
     path: ["confirmPassword"]
 })
+
+export type postData={
+    content?:string
+    tags?:string[]
+    pictureURL?:string
+    githubRepo?:string
+}

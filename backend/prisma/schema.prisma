@@ -15,4 +15,14 @@ model User{
   displayname String
   password String
   pictureURL String @default("https://res.cloudinary.com/dic5sskvu/image/upload/v1771032844/defaultAvatar_szkhjs.webp")
+  posts Post[]
+}
+
+model Post{
+  id Int @id @default(autoincrement())
+  date DateTime @default(now())
+  content String?
+  imageURL String?
+  poster User @relation(fields: [posterId],references: [id])
+  posterId Int
 }
