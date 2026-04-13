@@ -8,6 +8,8 @@ import { LogIn } from './components/auth/LogIn'
 import { AppLayout } from './layouts/AppLayout'
 import { Feed } from './components/pages/Feed'
 import { CreatePost } from './components/pages/CreatePost'
+import { Search } from './components/pages/Search'
+import { UserProfile } from './components/pages/UserProfile'
 //import CrescentPanel from './components/ui/CrescentPanel'
 
 
@@ -24,6 +26,8 @@ const router = createBrowserRouter([
     children: [
       { path: "home", element: <Feed/> },
       { path: "create", element: <CreatePost/> },
+      {path: "search", element: <Search/> },
+      {path:"users/:id", element:<UserProfile/>}
     ]
   },
 ])

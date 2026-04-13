@@ -16,6 +16,7 @@ export async function getUser(username:string){
     const user = await prisma.user.findUnique({
         where:{username:username},
         select:{
+            id:true,
             username:true,
             displayname:true,
             pictureURL:true
@@ -28,8 +29,19 @@ export async function getUser(username:string){
 
 
 export async function findUserByUsername(username:string){
-    const existingUser = await prisma.user.findUnique({
-        where:{username:username}
+    const existingUser = await prisma.user.findMany({
+        where:{username:
+            {
+                contains:username,
+                mode:"insensitive"
+            }
+        },
+        select:{
+            id:true,
+            username:true,
+            displayname:true,
+            pictureURL:true
+        }
     })
     return existingUser
 }

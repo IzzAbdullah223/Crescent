@@ -27,3 +27,22 @@ export async function getUser(req: Request, res: Response) {
 
 
 }
+
+export async function searchUsers(req: Request, res: Response) {
+    if(!req.user){
+        return res.status(401).json({
+            error:"Unauthorized"
+        })
+    }
+
+    try{
+        const users = await db.findUserByUsername(req.query.username as string)
+        return res.status(200).json(users)
+    }
+    catch(err){
+        console.error(err)
+        return res.status(500).json({ error: 'Internal server error' })
+    }
+  
+  
+}

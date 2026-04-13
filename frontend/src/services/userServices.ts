@@ -15,3 +15,29 @@ export async function getUser(){
     return response
 
 }
+
+export async function getUsers(){
+    const token = localStorage.getItem('token')
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/users`,{
+        method:"GET",
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+ 
+    return response
+
+}
+
+export async function searchUser(query:string){
+    const token = localStorage.getItem('token') 
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/users?username=${query}`,{
+        method:"GET",
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+
+    return response
+}
