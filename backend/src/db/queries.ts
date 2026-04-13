@@ -39,7 +39,7 @@ export async function createPost(posterId:number,content:string,tags:string[],me
         data:{
             posterId:posterId,
             content:content ?? null,
-            media:media ?? null,
+            mediaURL:media ?? null,
             githubRepo:githubRepo ?? null,
             tags:tags
         }

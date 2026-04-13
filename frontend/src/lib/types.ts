@@ -37,7 +37,7 @@ export type Like={
 export type feedData={
     id:number,
     content:string,
-    media:string,
+    mediaURL:string,
     tags:string[],
     poster:{
         username:string,

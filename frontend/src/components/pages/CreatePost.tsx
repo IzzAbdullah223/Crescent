@@ -19,6 +19,7 @@ export function CreatePost(){
 
     const [tagInput, setTagInput] = useState('')
     const [imagePreview, setImagePreview] = useState<string | undefined>(undefined)
+    const [fileType,setFileType]=useState<string>()
     const fileInputRef = useRef<HTMLInputElement>(null)
     
 
@@ -28,6 +29,7 @@ export function CreatePost(){
 
     const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
+        setFileType(file?.type)
         if (!file) return
         if (imagePreview) URL.revokeObjectURL(imagePreview)
         if (fileInputRef.current) fileInputRef.current.value = ""
@@ -35,7 +37,7 @@ export function CreatePost(){
         setImagePreview(imageUrl)
         setFormData(prev => ({
             ...prev,
-            pictureURL:file
+            mediaURL:file
         }))
 
   }
@@ -112,10 +114,13 @@ export function CreatePost(){
                 }}
              />
 
-            <div className={`relative mx-auto  w-fit h-fit ${imagePreview ? "" : "hidden"}`}>
-                <img className="w-80 rounded-lg" src={imagePreview} />
+            <div className={`relative mx-auto w-fit h-fit ${imagePreview ? "" : "hidden"}`}>
+                {fileType?.startsWith('video/')
+                    ? <video src={imagePreview} controls className="w-80 rounded-lg" />
+                    : <img className="w-80 rounded-lg" src={imagePreview} />
+                 }
                 <button type="button" onClick={handleCancelImage} className="absolute size-6 top-0 right-0 bg-dark-300 rounded-full p-1 cursor-pointer">
-                  <img src={close} />
+                    <img src={close} />
                 </button>
             </div>
 
@@ -132,7 +137,7 @@ export function CreatePost(){
              <div className="flex items-center justify-between mt-0"> 
 
                 <div className="flex items-center gap-3">
-                    <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileSelect} />
+                    <input type="file" ref={fileInputRef} className="hidden" accept="image/*,video/*" onChange={handleFileSelect} />
                     <img src={clip} className="cursor-pointer" onClick={HandleImageUpload}/>
                     <img src={tag} className=" cursor-pointer border-b-2  border-white pb-1"/>
                     <img src={github} className="cursor-pointer"/>

@@ -87,9 +87,11 @@ export function Feed(){
                               <p className="">{post.content}</p>
                               
                             )}
-                            {post.media && (
-                              <img src={post.media} className="max-w-[40rem] w-[100%] rounded-3xl mx-auto mb-8 bg-red-500" />
-                            )}
+                            {post.mediaURL && (
+                              post.mediaURL.includes('/video/')
+                                ? <video src={post.mediaURL} controls className="max-w-[40rem] w-[100%] rounded-3xl mx-auto mb-8" />
+                                : <img src={post.mediaURL} className="max-w-[40rem] w-[100%] rounded-3xl mx-auto mb-8" />
+                                )}
 
             <div className='flex gap-4'>
                  

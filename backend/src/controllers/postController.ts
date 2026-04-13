@@ -18,6 +18,12 @@ export async function createPost(req:Request,res:Response){
     const githubRepo = req.body.githubRepo as string
     const tags = JSON.parse(req.body.tags) as string[] || []
     let media:string | null = null
+    console.log("Creating post with the following details:")
+    console.log(posterId)
+    console.log(content)
+    console.log(githubRepo)
+    console.log(tags)
+    console.log(req.file)
 
     
  
@@ -34,6 +40,7 @@ export async function createPost(req:Request,res:Response){
         })
     }
     catch(err){
+        console.log(err)
         return res.status(500).json({
             message:"Internal server error"
         })
