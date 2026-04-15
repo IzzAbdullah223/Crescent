@@ -53,12 +53,26 @@ export async function findUserByID(id:number){
             id:true,
             username:true,
             displayname:true,
-            pictureURL:true
+            pictureURL:true,
+            bio:true,
+            website:true,
+            githubLink:true
         }
     })
     return user
 }
 
+export async function updateProfile(userId:number,displayName:string,bio?:string,website?:string,github?:string){
+    await prisma.user.update({
+        where:{id:userId},
+        data:{
+            displayname:displayName,
+            bio:bio ?? '',
+            website:website ?? '',
+            githubLink:github ?? ''
+        }
+    })
+}
 
 export async function createPost(posterId:number,content:string,tags:string[],media:string | null,githubRepo:string){
     await prisma.post.create({

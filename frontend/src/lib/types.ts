@@ -16,10 +16,10 @@ export type TSignUpSchema = z.infer<typeof signUpSchema>
 
 
 export const profileSchema = z.object({
-  displayname: z.string().min(1, 'Name required').max(50),
+  displayName: z.string().min(1, 'Name required').max(50),
   bio: z.string().max(160).optional(),
-  website: z.string().url('Invalid URL').optional().or(z.literal('')),
-  github: z.string().url('Invalid URL').optional().or(z.literal('')),
+website: z.literal('').or(z.string().url('Invalid URL')).optional(),
+github: z.literal('').or(z.string().url('Invalid URL')).optional(),
 })
 export type TProfileSchema = z.infer<typeof profileSchema>
 
@@ -29,7 +29,7 @@ export type user={
     displayname:string,
     pictureURL:string,
     bio:string,
-    github:string,
+    githubLink:string,
     website:string,
 }
 
