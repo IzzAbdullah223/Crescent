@@ -46,6 +46,20 @@ export async function findUserByUsername(username:string){
     return existingUser
 }
 
+export async function findUserByID(id:number){
+    const user = await prisma.user.findUnique({
+        where:{id:Number(id)},
+        select:{
+            id:true,
+            username:true,
+            displayname:true,
+            pictureURL:true
+        }
+    })
+    return user
+}
+
+
 export async function createPost(posterId:number,content:string,tags:string[],media:string | null,githubRepo:string){
     await prisma.post.create({
         data:{
@@ -63,6 +77,7 @@ export async function getPosts(){
         include:{
             poster:{
                 select:{
+                    id:true,
                     username:true,
                     displayname:true,
                     pictureURL:true,
@@ -76,6 +91,28 @@ export async function getPosts(){
             }
         }
         
+    })
+}
+
+export async function getUserPosts(userId:number){
+    return await prisma.post.findMany({
+        where:{posterId:userId},
+        include:{
+            poster:{
+                select:{
+                    id:true,
+                    username:true,
+                    displayname:true,
+                    pictureURL:true,
+                }
+            },
+            likes:{
+                select:{
+                    userId:true,
+                    postId:true,
+                }
+            }
+        }
     })
 }
 

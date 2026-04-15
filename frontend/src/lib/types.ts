@@ -14,11 +14,23 @@ export const signUpSchema = z.object({
 
 export type TSignUpSchema = z.infer<typeof signUpSchema>
 
+
+export const profileSchema = z.object({
+  displayname: z.string().min(1, 'Name required').max(50),
+  bio: z.string().max(160).optional(),
+  website: z.string().url('Invalid URL').optional().or(z.literal('')),
+  github: z.string().url('Invalid URL').optional().or(z.literal('')),
+})
+export type TProfileSchema = z.infer<typeof profileSchema>
+
 export type user={
     id:number,
     username:string
     displayname:string,
-    pictureURL:string
+    pictureURL:string,
+    bio:string,
+    github:string,
+    website:string,
 }
 
 export type postData={
@@ -40,6 +52,7 @@ export type feedData={
     mediaURL:string,
     tags:string[],
     poster:{
+        id:number,
         username:string,
         displayname:string,
         pictureURL:string

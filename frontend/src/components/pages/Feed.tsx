@@ -78,7 +78,7 @@ export function Feed(){
 
             <div className='flex items-center gap-2'>
                 <img src={post.poster?.pictureURL} className=' mr-2 size-8 rounded-full object-cover object-center'/>
-                <Link to={'/'} className='font-Alata hover:underline'>{post.poster?.username}</Link>
+                <Link to={`/user/${post.poster?.id}`} className='font-Alata hover:underline'>{post.poster?.username}</Link>
                 <div className='text-[#565565] text-2xl'>•</div>
                 <div className='text-[#565565] text-balance'>15 hours ago</div>
             </div>

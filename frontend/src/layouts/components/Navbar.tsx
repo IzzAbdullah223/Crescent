@@ -32,27 +32,27 @@ export function NavBar(){
         <div className='hidden xl:text-xl xl:font-bold xl:block'>Create</div>
       </NavLink>
 
-      <NavLink to="/Search" className={({ isActive }) => navStyle(isActive)}>
+      <NavLink to="/search" className={({ isActive }) => navStyle(isActive)}>
         <img src={searchUser} className='size-6' />
         <div className='hidden xl:text-xl xl:font-bold xl:block'>Users</div>
       </NavLink>
 
-      <NavLink to="/Chat" className={({ isActive }) => navStyle(isActive)}>
+      <NavLink to="/chat" className={({ isActive }) => navStyle(isActive)}>
         <img src={chat} className='size-6' />
         <div className='hidden xl:text-xl xl:font-bold xl:block'>Message</div>
       </NavLink>
 
-      <NavLink to="/Likes" className={({ isActive }) => navStyle(isActive)}>
+      <NavLink to="/likes" className={({ isActive }) => navStyle(isActive)}>
         <img src={heart} className='size-6' />
         <div className='hidden xl:text-xl xl:font-bold xl:block'>Likes</div>
       </NavLink>
 
-      <NavLink to="/Profile" className={({ isActive }) => navStyle(isActive)}>
+      <NavLink to="/profile" className={({ isActive }) => navStyle(isActive)}>
         <img src={profile} className='size-6' />
         <div className='hidden xl:text-xl xl:font-bold xl:block'>Profile</div>
       </NavLink>
 
-      <NavLink to="/Settings" className={({ isActive }) => navStyle(isActive)}>
+      <NavLink to="/settings" className={({ isActive }) => navStyle(isActive)}>
         <img src={settings} className='size-6' />
         <div className='hidden xl:text-xl xl:font-bold xl:block'>Settings</div>
       </NavLink>

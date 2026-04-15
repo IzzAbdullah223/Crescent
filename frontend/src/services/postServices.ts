@@ -52,3 +52,15 @@ export async function unlikePost(postId:number){
     })
     return response
 }
+
+export async function getUserPosts(userId:number){
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/posts/${userId}`,{
+        method:"GET",
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+
+    return response
+}
