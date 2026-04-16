@@ -13,6 +13,7 @@ export function LogIn(){
         e.preventDefault()
         setIsSubmitting(true)
         const response = await logIn({ username, password })
+        console.log(response)
         if (response.status === 200) {
             const data = await response.json()
             localStorage.setItem('token', data.token)

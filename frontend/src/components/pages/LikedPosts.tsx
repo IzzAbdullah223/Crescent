@@ -15,6 +15,7 @@ export function LikedPosts(){
         const response = await getLikedPosts()
         if(response.status === 200){
             const responseData: feedData[] = await response.json()
+            console.log(responseData)
             setLikedPosts(responseData)
         }
     }
@@ -29,6 +30,8 @@ export function LikedPosts(){
         posts()
     }
 
+    const test =()=>{console.log(likedPosts[0].likes)}
+
     useEffect(() => { posts() }, [])
 
     return(
@@ -37,7 +40,7 @@ export function LikedPosts(){
                 <Link to="/search" className='hover:bg-white/10 rounded-full p-1'> 
                     <img src={leftArrow} className="size-6 cursor-pointer"/>
                 </Link>
-                <span className="font-bold text-xl">Liked Posts</span>
+                <span className="font-bold text-xl" onClick={test}>Liked Posts</span>
             </div>
 
             {likedPosts.map((post, index) => (
@@ -59,10 +62,10 @@ export function LikedPosts(){
 
                     <div className='flex gap-4'>
                         <div className='flex items-center gap-1.5'>
-                            {post.likes.some(like => like.userId === currentUserId)
+                             {post.likes.some(like => like.userId === currentUserId)
                                 ? <img src={redHeart} className='size-6' onClick={() => unlike(post.id)}/>
                                 : <img src={likes} className='size-6' onClick={() => like(post.id)}/>
-                            }
+                           }   
                             <span>{post.likes.length}</span>
                         </div>
                         <div className='flex items-center gap-1.5'>

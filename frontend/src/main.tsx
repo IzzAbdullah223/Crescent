@@ -13,6 +13,7 @@ import { Profile } from './components/pages/Profile'
 import { UserProfileCard } from './components/profile/UserProfileCard'
 import { MyProfileCard } from './components/profile/MyProfileCard'
 import { LikedPosts } from './components/pages/LikedPosts'
+import { Settings } from './components/pages/Settings'
 //import CrescentPanel from './components/ui/CrescentPanel'
 
 
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
     {path: "liked", element: <LikedPosts/>},
     { path: "user/:id", element: <Profile Card={<UserProfileCard />} /> },
     { path: "profile", element: <Profile Card={<MyProfileCard />} /> },
+    {path:"settings", element:<Settings/>}
   ]
 }
 ])

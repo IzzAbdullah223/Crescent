@@ -21,7 +21,7 @@ export async function logIn(data: { username: string; password: string }){
     
     const response = await fetch(`${import.meta.env.VITE_API_URL}/login`,{
         method:"POST",
-        headers:{'content-Type': 'application/json'},
+        headers:{'Content-Type': 'application/json'},
         body:JSON.stringify({
             username: data.username,
             password: data.password

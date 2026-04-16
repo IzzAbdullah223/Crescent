@@ -30,6 +30,7 @@ export function Feed(){
          if(response.status===200){
 
             const responseData:user = await response.json()
+            console.log(responseData)
             setCurrentUser(responseData)
           
          }

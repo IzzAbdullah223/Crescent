@@ -28,7 +28,7 @@ export async function getUser(username:string){
 
 
 
-export async function findUserByUsername(username:string){
+export async function SearchUserByUsername(username:string){
     const existingUser = await prisma.user.findMany({
         where:{username:
             {
@@ -131,7 +131,7 @@ export async function getUserPosts(userId:number){
 }
 
 export async function getLikedPosts(userId:number){
-     return await prisma.like.findMany({
+     const posts = await prisma.like.findMany({
         where:{userId:userId},
         include:{
             post:{
@@ -154,6 +154,7 @@ export async function getLikedPosts(userId:number){
             }
         }
      })
+    return posts.map(like=>like.post)
 }
 
 

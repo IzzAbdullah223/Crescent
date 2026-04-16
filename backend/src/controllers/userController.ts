@@ -37,7 +37,7 @@ export async function searchUsers(req: Request, res: Response) {
     }
 
     try{
-        const users = await db.findUserByUsername(req.query.username as string)
+        const users = await db.SearchUserByUsername(req.query.username as string)
         return res.status(200).json(users)
     }
     catch(err){
