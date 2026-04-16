@@ -2,12 +2,22 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import {type user} from '../../lib/types'
 import { getUserID } from '../../services/userServices';
+import { useNavigate } from 'react-router-dom';
+import { addFriend } from '../../services/chatServices';
 
 import message from '../../assets/message-circle.svg'
 
 export function UserProfileCard(){
 
+    const navigate = useNavigate()
     const { id } = useParams()
+    const currentuserId =  localStorage.getItem('currentUserId')
+
+    if(currentuserId === id){
+        navigate('/profile')
+    }
+
+
 
     const[userData,setUserData] = useState<user>()
     const userId = Number(id)
@@ -15,19 +25,27 @@ export function UserProfileCard(){
     const user = async ()=>{
  
         const response = await getUserID(userId)
-        console.log(response)
         if(response.status===200){
             const responseData:user = await response.json()
-            console.log("yo")
-            console.log(responseData)
           
             setUserData(responseData)
         }
     }
 
+    const startChat = async ()=>{
+        const response = await addFriend(userId)
+        console.log(response)
+        if(response.status===200){
+            navigate('/chat')
+        }
+
+    }
+
     useEffect(()=>{
         user()
     },[])
+
+    
     return(
             <div className='flex flex-col gap-15 border-b border-gray-400/15'>
                 <div className='flex items-center gap-15 p-4 '> 
@@ -59,8 +77,10 @@ export function UserProfileCard(){
                         </div>
 
                         <div className='flex items-center gap-4 w-full'> 
-                            <button className='bg-[#c4c2ce] text-black text-sm font-bold py-2 w-full rounded-full outline outline-[#f7f4f8] hover:bg-black hover:text-[#c4c2ce] hover:outline-white cursor-pointer'>Follow</button>
-                            <div className='outline-1 outline-white rounded-full p-0.5 px-2.5 hover:outline-#f7f4f8 hover:bg-[#c4c2ce] cursor-pointer'> 
+                            <button
+                             className='bg-[#c4c2ce] text-black text-sm font-bold py-2 w-full rounded-full outline outline-[#f7f4f8] hover:bg-black hover:text-[#c4c2ce] hover:outline-white cursor-pointer'>
+                            Follow</button>
+                            <div className='outline-1 outline-white rounded-full p-0.5 px-2.5 hover:outline-#f7f4f8 hover:bg-[#c4c2ce] cursor-pointer' onClick={startChat}> 
                                 <img src={message} className="size-8  cursor-pointer hover:brightness-0"/>
                             </div>
                         </div>

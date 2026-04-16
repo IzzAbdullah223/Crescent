@@ -51,7 +51,7 @@ export function Search(){
                                 <div key={user.id} className='flex items-center gap-4 p-3 -mb-3'>
                                     <img src={user.pictureURL} className="size-9 rounded-full"/>
                                     <div className='font-Inter'>
-                                        <Link to={`/users/${user.id}`} className='hover:underline font-semibold'>{user.username}</Link>
+                                        <Link to={`/user/${user.id}`} className='hover:underline font-semibold'>{user.username}</Link>
                                         <div className='text-sm text-[#c7c6ccd2]'>{user.displayname}</div>
                                     </div>
                                 </div>

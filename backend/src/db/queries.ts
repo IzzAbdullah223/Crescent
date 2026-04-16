@@ -1,3 +1,4 @@
+import e from "express";
 import { prisma } from "./lib/prisma.js";
  
 export async function signUp(username:string,fName:string,password:string){
@@ -173,6 +174,34 @@ export async function unlikePost(userId:number,postId:number){
             userId_postId:{
                 userId:userId,
                 postId:postId
+            }
+        }
+    })
+}
+
+export async function getUserFriends(userId: number) {
+    const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+            friends: {
+                select: {
+                    id: true,
+                    username: true,
+                    displayname: true,
+                    pictureURL: true,
+                }
+            }
+        }
+    })
+    return user!.friends
+}
+
+export async function addFriend(userId: number, friendId: number) {
+    await prisma.user.update({
+        where: { id: userId },
+        data: {
+            friends: {
+                connect: { id: friendId }
             }
         }
     })

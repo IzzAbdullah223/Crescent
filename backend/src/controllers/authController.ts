@@ -56,6 +56,7 @@ export async function signUpPost(req:Request,res:Response){
 export async function logInPost(req:Request,res:Response){
 
         const user=req.user
+        console.log(user)
         jwt.sign({user:user},process.env.SECRET_KEY as Secret,{expiresIn: '24h'},(err: Error | null, token: string | undefined)=>{
           res.json({
                 token,
