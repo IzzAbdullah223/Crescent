@@ -206,3 +206,36 @@ export async function addFriend(userId: number, friendId: number) {
         }
     })
 }
+
+
+export async function fetchDirectedMessages(senderId: number, recipientId: number) {
+    return await prisma.message.findMany({
+        where: {
+            OR: [
+                { senderId: senderId, recipentId: recipientId },
+                { senderId: recipientId, recipentId: senderId }
+            ]
+        },
+        include: {
+            sender: {
+                select: { username: true, displayname: true, pictureURL: true }
+            }
+        },
+        orderBy: { date: 'asc' }
+    })
+}
+
+export async function postDirectedMessage(senderId: number, recipientId: number, message?: string) {
+    return await prisma.message.create({
+        data: {
+            senderId,
+            recipentId: recipientId,
+            content: message ?? null,
+        },
+        include: {
+            sender: {
+                select: { username: true, displayname: true, pictureURL: true }
+            }
+        }
+    })
+}

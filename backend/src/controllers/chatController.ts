@@ -46,3 +46,35 @@ export async function addFriend(req:Request,res:Response){
     }   
 
 }
+
+
+export async function getDirectedMessages(req: Request, res: Response) {
+    if (!req.user) return res.status(401).json({ message: "Unauthorized" })
+
+    const senderId = req.user.id
+    const recipientId = Number(req.params.id)
+
+    try {
+        const messages = await db.fetchDirectedMessages(senderId, recipientId)
+        return res.status(200).json(messages)
+    } catch (err) {
+        return res.status(500).json({ message: "Failed to retrieve messages" })
+    }
+}
+
+export async function postDirectedMessage(req: Request, res: Response) {
+    if (!req.user) return res.status(401).json({ message: "Unauthorized" })
+
+    const senderId = req.user.id
+    const recipientId = Number(req.params.id)
+    const message = req.body.message as string | undefined
+
+    if (!message?.trim()) return res.status(400).json({ message: "Message required" })
+
+    try {
+        const newMessage = await db.postDirectedMessage(senderId, recipientId, message)
+        return res.status(201).json(newMessage)
+    } catch (err) {
+        return res.status(500).json({ message: "Failed to send message" })
+    }
+}

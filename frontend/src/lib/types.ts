@@ -59,3 +59,11 @@ export type feedData={
     }
     likes:Like[]
 }
+
+export type Message = {
+    id: number
+    content: string
+    date: string
+    senderId: number
+    recipentId: number
+}
