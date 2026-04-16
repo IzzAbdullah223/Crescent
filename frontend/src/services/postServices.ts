@@ -64,3 +64,15 @@ export async function getUserPosts(userId:number){
 
     return response
 }
+
+export async function getLikedPosts(){
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/posts/liked`,{
+        method:"GET",
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+
+    return response
+}

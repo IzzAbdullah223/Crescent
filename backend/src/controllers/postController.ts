@@ -74,7 +74,25 @@ export async function getUserPosts(req:Request,res:Response){
         })
     }
 }
- 
+
+export async function getLikedPosts(req:Request,res:Response){
+    if(!req.user){
+        return res.status(401).json({
+            message:"Unauthorized"
+        })
+    }
+    const userId = Number(req.user.id)
+    console.log(userId)
+    try{
+        const posts = await db.getLikedPosts(userId)
+        return res.status(200).json(posts)
+    }
+    catch(err){
+        return res.status(500).json({
+            message:"Internal server error"
+        })
+    }
+}
 
 export async function likePost(req:Request,res:Response){
     if(!req.user){

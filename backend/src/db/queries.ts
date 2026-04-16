@@ -130,6 +130,33 @@ export async function getUserPosts(userId:number){
     })
 }
 
+export async function getLikedPosts(userId:number){
+     return await prisma.like.findMany({
+        where:{userId:userId},
+        include:{
+            post:{
+                include:{
+                    poster:{
+                        select:{
+                            id:true,
+                            username:true,
+                            displayname:true,
+                            pictureURL:true,
+                        }
+                    },
+                    likes:{
+                        select:{
+                            userId:true,
+                            postId:true,
+                        }
+                    }
+                }
+            }
+        }
+     })
+}
+
+
 export async function likePost(userId:number,postId:number){
     await prisma.like.create({
         data:{

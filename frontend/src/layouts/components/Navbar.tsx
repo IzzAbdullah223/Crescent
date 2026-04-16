@@ -42,7 +42,7 @@ export function NavBar(){
         <div className='hidden xl:text-xl xl:font-bold xl:block'>Message</div>
       </NavLink>
 
-      <NavLink to="/likes" className={({ isActive }) => navStyle(isActive)}>
+      <NavLink to="/liked" className={({ isActive }) => navStyle(isActive)}>
         <img src={heart} className='size-6' />
         <div className='hidden xl:text-xl xl:font-bold xl:block'>Likes</div>
       </NavLink>
