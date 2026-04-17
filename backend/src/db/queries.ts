@@ -57,7 +57,8 @@ export async function findUserByID(id:number){
             pictureURL:true,
             bio:true,
             website:true,
-            githubLink:true
+            githubLink:true,
+            followers:true,
         }
     })
     return user
@@ -247,5 +248,17 @@ export async function postDirectedMessage(senderId: number, recipientId: number,
                 select: { username: true, displayname: true, pictureURL: true }
             }
         }
+    })
+}
+
+export async function followUser(followerId: number, followingId: number) {
+    return prisma.follow.create({
+        data: { followerId, followingId }
+    })
+}
+
+export async function unfollowUser(followerId: number, followingId: number) {
+    return prisma.follow.deleteMany({
+        where: { followerId, followingId }
     })
 }

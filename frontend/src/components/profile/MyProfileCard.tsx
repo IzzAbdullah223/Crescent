@@ -120,12 +120,12 @@ const githubWatch = watch('github')
 
                     <div className='flex gap-4 text-[0.9rem]'>
                         <div>
-                            <div className="font-bold text-center">0</div>
+                            <div className="font-bold text-center">{userData?.followers?.length ?? 0}</div>
                             <span className="text-[#e7e7eb] text-md">Followers</span>
                         </div>
 
                         <div>
-                            <div className="font-bold text-center">0</div>
+                            <div className="font-bold text-center">{userData?.following?.length ?? 0}</div>
                             <span className="text-[#e7e7eb] text-md">Following</span>
                         </div>
 

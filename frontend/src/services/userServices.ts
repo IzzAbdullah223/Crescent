@@ -84,3 +84,21 @@ export async function changeProfilePicture(formData:FormData){
     console.log(response)
     return response
 }
+
+export async function followUser(userId: number) {
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${userId}/follow`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+    })
+    return response
+}
+
+export async function unfollowUser(userId: number) {
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${userId}/unfollow`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+    })
+    return response
+}

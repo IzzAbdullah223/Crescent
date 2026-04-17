@@ -23,6 +23,12 @@ github: z.literal('').or(z.string().url('Invalid URL')).optional(),
 })
 export type TProfileSchema = z.infer<typeof profileSchema>
 
+export type Follow ={
+    id:number,
+    followerId:number,
+    followingId:number
+}
+
 export type user={
     id:number,
     username:string
@@ -31,6 +37,8 @@ export type user={
     bio:string,
     githubLink:string,
     website:string,
+    followers: Follow[]
+    following: Follow[]
 }
 
 export type postData={

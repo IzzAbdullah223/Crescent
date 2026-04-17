@@ -22,6 +22,8 @@ model User {
   receivedMessages Message[] @relation("ReceivedMessages")
   friends          User[]    @relation("UserFriends")
   friendOf         User[]    @relation("UserFriends")
+  followers  Follow[] @relation("Followers")  // people following this user
+  following  Follow[] @relation("Following")  // people this user follows
 }
 
 model Post {
@@ -55,4 +57,13 @@ model Message {
   senderId    Int
   recipent    User?    @relation("ReceivedMessages", fields: [recipentId], references: [id])
   recipentId  Int?
+}
+
+model Follow{
+  id          Int  @id @default(autoincrement())
+  followerId  Int
+  followingId Int
+  follower    User @relation("Followers", fields: [followerId], references: [id])
+  following   User @relation("Following", fields: [followingId], references: [id])
+  @@unique([followerId, followingId])
 }

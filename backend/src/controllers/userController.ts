@@ -123,3 +123,28 @@ export async function updateProfile(req:Request,res:Response){
         return res.status(500).json({ error: 'Internal server error' })
     }
 }
+
+
+export async function followUser(req: Request, res: Response) {
+    const followingId = Number(req.params.id)
+    if(!req.user) return res.status(401).json({ error: "Unauthorized" })
+    const followerId = req.user.id
+    try {
+        await db.followUser(followerId, followingId)
+        return res.status(200).json({ message: "success" })
+    } catch(e) {
+        return res.status(500).json({ message: "error" })
+    }
+}
+
+export async function unfollowUser(req: Request, res: Response) {
+    const followingId = Number(req.params.id)
+    if(!req.user) return res.status(401).json({ error: "Unauthorized" })
+    const followerId = req.user.id
+    try {
+        await db.unfollowUser(followerId, followingId)
+        return res.status(200).json({ message: "success" })
+    } catch(e) {
+        return res.status(500).json({ message: "error" })
+    }
+}
