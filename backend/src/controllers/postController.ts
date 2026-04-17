@@ -172,3 +172,28 @@ export async function getComments(req:Request,res:Response){
     }
 
 }
+
+
+export async function likeComment(req: Request, res: Response) {
+    if (!req.user) return res.status(401).json({ message: "Unauthorized" })
+    const userId = req.user.id
+    const commentId = Number(req.params.commentId)
+    try {
+        await db.likeComment(userId, commentId)
+        return res.status(200).json({ success: true })
+    } catch (err) {
+        return res.status(500).json({ message: "Failed to like comment" })
+    }
+}
+
+export async function unlikeComment(req: Request, res: Response) {
+    if (!req.user) return res.status(401).json({ message: "Unauthorized" })
+    const userId = req.user.id
+    const commentId = Number(req.params.commentId)
+    try {
+        await db.unlikeComment(userId, commentId)
+        return res.status(200).json({ success: true })
+    } catch (err) {
+        return res.status(500).json({ message: "Failed to unlike comment" })
+    }
+}

@@ -275,6 +275,11 @@ export async function postComment(postId: number, commenterId: number, comment: 
             commenterId: commenterId,
             postId: postId,
             comment: comment
+        },
+        include:{
+            user:{
+                select:{id:true,username:true,displayname:true,pictureURL:true,likes:true}
+            }
         }
     })
 }
@@ -290,8 +295,22 @@ export async function getComments(postId:number){
                     displayname:true,
                     pictureURL:true,
                 }
-            }
+            },
+            likes:true
         }
+    })
+}
+
+
+export async function likeComment(userId: number, commentId: number) {
+    return await prisma.commentLike.create({
+        data: { userId, commentId }
+    })
+}
+
+export async function unlikeComment(userId: number, commentId: number) {
+    return await prisma.commentLike.deleteMany({
+        where: { userId, commentId }
     })
 }
 

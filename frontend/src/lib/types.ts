@@ -84,10 +84,17 @@ export type Comment = {
     comment: string
     PostId: number
     CommenterId: number
+     likes: CommentLike[]
     user: {
         id: number
         username: string
         displayname: string
         pictureURL: string
     }
+}
+
+export type CommentLike = {
+    id: number
+    userId: number
+    commentId: number
 }
