@@ -82,9 +82,10 @@ export type Message = {
 export type Comment = {
     id: number
     comment: string
-    PostId: number
-    CommenterId: number
-     likes: CommentLike[]
+    postId: number
+    commenterId: number
+    likes: CommentLike[]
+    replies: Reply[]
     user: {
         id: number
         username: string
@@ -97,4 +98,18 @@ export type CommentLike = {
     id: number
     userId: number
     commentId: number
+}
+
+export type Reply = {
+    id: number
+    comment: string
+    commenterId: number
+    parentId: number
+    likes: CommentLike[]
+    user: {
+        id: number
+        username: string
+        displayname: string
+        pictureURL: string
+    }
 }

@@ -272,14 +272,15 @@ export async function unfollowUser(followerId: number, followingId: number) {
 export async function postComment(postId: number, commenterId: number, comment: string) {
     return prisma.comment.create({
         data: {
-            commenterId: commenterId,
-            postId: postId,
-            comment: comment
+            commenterId,
+            postId,
+            comment
         },
-        include:{
-            user:{
-                select:{id:true,username:true,displayname:true,pictureURL:true,likes:true}
-            }
+        include: {
+            user: {
+                select: { id: true, username: true, displayname: true, pictureURL: true }
+            },
+            likes: true
         }
     })
 }
@@ -296,11 +297,27 @@ export async function getComments(postId:number){
                     pictureURL:true,
                 }
             },
-            likes:true
+            likes:true,
+            replies:{
+                include:{
+                    user: { select: { id: true, username: true, displayname: true, pictureURL: true } },
+                    likes: true
+                }
+            }
         }
     })
 }
 
+
+export async function postReply(commentId: number, commenterId: number, comment: string, postId: number) {
+    return await prisma.comment.create({
+        data: { commenterId, postId, comment, parentId: commentId },
+        include: {
+            user: { select: { id: true, username: true, displayname: true, pictureURL: true } },
+            likes: true
+        }
+    })
+}
 
 export async function likeComment(userId: number, commentId: number) {
     return await prisma.commentLike.create({

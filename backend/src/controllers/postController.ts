@@ -197,3 +197,17 @@ export async function unlikeComment(req: Request, res: Response) {
         return res.status(500).json({ message: "Failed to unlike comment" })
     }
 }
+
+export async function postReply(req: Request, res: Response) {
+    if (!req.user) return res.status(401).json({ message: "Unauthorized" })
+    const commentId = Number(req.params.commentId)
+    const commenterId = req.user.id
+    const comment = req.body.comment as string
+    const postId = Number(req.body.postId)
+    try {
+        const reply = await db.postReply(commentId, commenterId, comment, postId)
+        return res.status(200).json(reply)
+    } catch (err) {
+        return res.status(500).json({ message: "Internal server error" })
+    }
+}

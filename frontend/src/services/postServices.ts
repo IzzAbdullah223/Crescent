@@ -105,6 +105,21 @@ export async function getComments(postId:number){
 }
 
 
+export async function postReply(commentId: number, comment: string,postId:number) {
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/post/comments/${commentId}/reply`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ comment,postId })
+    })
+    return response
+}
+
+
+
 export async function likeComment(commentId: number) {
     const token = localStorage.getItem('token')
     const response = await fetch(`${import.meta.env.VITE_API_URL}/posts/comments/${commentId}/like`, {
