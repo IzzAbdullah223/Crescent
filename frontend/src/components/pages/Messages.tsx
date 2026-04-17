@@ -5,7 +5,9 @@ import { type user, type Message } from '../../lib/types'
 import leftArrow from '../../assets/arrow-left(1).svg'
 import send from '../../assets/send.svg'
 import { fetchDirectedMessages, sendDirectedMessage } from '../../services/chatServices'
+import {io as socketIO} from 'socket.io-client'
 
+const socket = socketIO(import.meta.env.VITE_API_URL)
 const currentUserId = Number(localStorage.getItem('currentUserId'))
 
 export function Messages() {
@@ -26,6 +28,23 @@ export function Messages() {
     useEffect(() => {
         getMessages()
     }, [])
+
+
+
+    useEffect(() => {
+        const roomId = `chat_${Math.min(currentUserId, friend.id)}_${Math.max(currentUserId, friend.id)}`
+
+        socket.emit('join_room', roomId)
+
+        socket.on('newMessage', (newMessage: Message) => {
+            setData(prev => [...prev, newMessage])
+        })
+
+        return () => {
+            socket.emit('leave_room', roomId)
+            socket.off('newMessage')
+        }
+    }, [friend.id])
 
     const handleSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault()

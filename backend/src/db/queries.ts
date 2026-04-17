@@ -196,7 +196,7 @@ export async function getUserFriends(userId: number) {
     return user!.friends
 }
 
-export async function addFriend(userId: number, friendId: number) {
+export async function addFriend(userId: number, friendId: number) { //right now this is one sided fix it later 
     await prisma.user.update({
         where: { id: userId },
         data: {
@@ -206,6 +206,8 @@ export async function addFriend(userId: number, friendId: number) {
         }
     })
 }
+
+
 
 
 export async function fetchDirectedMessages(senderId: number, recipientId: number) {

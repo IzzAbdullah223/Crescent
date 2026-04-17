@@ -1,5 +1,6 @@
 import {type Response, type Request } from 'express'
 import * as db from '../db/queries.js'
+import  {io} from '../app.js'
 
 
 export async function getFriends(req:Request,res:Response){
@@ -73,6 +74,8 @@ export async function postDirectedMessage(req: Request, res: Response) {
 
     try {
         const newMessage = await db.postDirectedMessage(senderId, recipientId, message)
+        const roomId = `chat_${Math.min(senderId, recipientId)}_${Math.max(senderId, recipientId)}`
+        io.to(roomId).emit('newMessage', newMessage)
         return res.status(201).json(newMessage)
     } catch (err) {
         return res.status(500).json({ message: "Failed to send message" })
