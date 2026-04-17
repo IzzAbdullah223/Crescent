@@ -35,58 +35,17 @@ export function Chat() {
 
             {loading ? (
 
-               <div className='flex flex-col gap-10 p-4'>
-                <div className='flex gap-3'> 
-                    <Skeleton circle height={40} width={40}/>
-                    <div>
-                        <Skeleton width={100} height={20}/>
-                        <Skeleton width={100} height={20}/>
-                    </div>
+        <div className='flex flex-col gap-10 p-4'>
+                {[...Array(7)].map((_, i) => (
+                    <div key={i} className='flex gap-3'>
+                        <Skeleton circle height={40} width={40}/>
+                        <div>
+                         <Skeleton width={100} height={20}/>
+                            <Skeleton width={100} height={20}/>
+                        </div>
                  </div>
-                <div className='flex gap-3'> 
-                    <Skeleton circle height={40} width={40}/>
-                    <div>
-                        <Skeleton width={100} height={20}/>
-                        <Skeleton width={100} height={20}/>
-                    </div>
-                 </div>
-                <div className='flex gap-3'> 
-                    <Skeleton circle height={40} width={40}/>
-                    <div>
-                        <Skeleton width={100} height={20}/>
-                        <Skeleton width={100} height={20}/>
-                    </div>
-                 </div>
-
-                <div className='flex gap-3'> 
-                    <Skeleton circle height={40} width={40}/>
-                    <div>
-                        <Skeleton width={100} height={20}/>
-                        <Skeleton width={100} height={20}/>
-                    </div>
-                 </div>
-                <div className='flex gap-3'> 
-                    <Skeleton circle height={40} width={40}/>
-                    <div>
-                        <Skeleton width={100} height={20}/>
-                        <Skeleton width={100} height={20}/>
-                    </div>
-                 </div>
-                <div className='flex gap-3'> 
-                    <Skeleton circle height={40} width={40}/>
-                    <div>
-                        <Skeleton width={100} height={20}/>
-                        <Skeleton width={100} height={20}/>
-                    </div>
-                 </div>
-                <div className='flex gap-3'> 
-                    <Skeleton circle height={40} width={40}/>
-                    <div>
-                        <Skeleton width={100} height={20}/>
-                        <Skeleton width={100} height={20}/>
-                    </div>
-                 </div>
-               </div>
+                ))}
+        </div>
                  
             ) : friends.length === 0 ? (
                 <div className="flex items-center justify-center mt-12 text-gray-400 text-center px-10">
