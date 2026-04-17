@@ -129,15 +129,46 @@ export async function unlikePost(req:Request,res:Response){
     
 }
 
-export async function getPostComments(req:Request,res:Response){
-    console.log(req.params.id)
-    console.log("hi")
+export async function postComment(req:Request,res:Response){
+    if(!req.user){
+        return res.status(401).json({
+            message:"Unauthorized"
+        })
+    }
+    const postId = Number(req.params.id)
+    const commenterId =  (req.user.id)
+    const comment = req.body.comment as string
+ 
+    try{
+        await db.postComment(postId,commenterId,comment)
+        return res.status(200).json({
+            message:"Comment posted"
+        })
+    }
+    catch(err){
+     return res.status(500).json({
+        message:"Internal server error"
+     })
+    }
+    
+}
+
+export async function getComments(req:Request,res:Response){
+        const postId = Number(req.params.id)
         if(!req.user){
         return res.status(401).json({
             message:"Unauthorized"
         })
     }
-    
-    return res.status(200)
+
+    try{
+        const comments = await db.getComments(postId)
+        return res.status(200).json(comments)
+    }
+    catch(err){
+        return res.status(500).json({
+            message:"Internal server error"
+        })
+    }
 
 }

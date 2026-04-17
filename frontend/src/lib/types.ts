@@ -78,3 +78,16 @@ export type Message = {
     senderId: number
     recipentId: number
 }
+
+export type Comment = {
+    id: number
+    comment: string
+    PostId: number
+    CommenterId: number
+    user: {
+        id: number
+        username: string
+        displayname: string
+        pictureURL: string
+    }
+}

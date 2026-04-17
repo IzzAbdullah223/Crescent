@@ -3,17 +3,21 @@ import leftArrow from '../../assets/arrow-left(1).svg'
 import { likePost, unlikePost } from "../../services/postServices"
 import { type feedData } from '../../lib/types'
 import { useEffect, useState } from "react"
- import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import likes from '../../assets/likes.svg'
 import redHeart from '../../assets/redHeart.svg'
-import comments from '../../assets/comment2.svg'
-import { getComments } from "../../services/postServices"
+import commentPic from '../../assets/comment2.svg'
+import commentLike from '../../assets/commentLikes.svg'
+import reply from '../../assets/reply.svg'
+import {type Comment} from '../../lib/types'
+import { getComments, postComment } from "../../services/postServices"
 
 export function Post() {
     const currentUserId = Number(localStorage.getItem('currentUserId'))
     const { state } = useLocation()
     const [post, setPost] = useState<feedData>(state.post)
     const [comment, setComment] = useState('')
+    const [comments, setComments] = useState<Comment[]>([])
 
     const like = async (postId: number) => {
         await likePost(postId)
@@ -31,14 +35,26 @@ export function Post() {
         }))
     }
 
-    const getPostComments = async ()=>{
+    const getPostComments = async () => {
         const response = await getComments(post.id)
-        
+        if(response.ok){
+            const responseData = await response.json()
+            setComments(responseData)
+        }
     }
 
-    useEffect(()=>{
+    const Comment = async () => {
+        if(!comment.trim()) return
+        const response = await postComment(post.id, comment)
+        if(response.status === 200){
+            setComment('')
+            getPostComments()
+        }
+    }
+
+    useEffect(() => {
         getPostComments()
-    },[])
+    }, [])
 
     return (
         <div className="overflow-y-auto flex-1 font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
@@ -72,8 +88,8 @@ export function Post() {
                         <span>{post.likes.length}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                        <img src={comments} className="size-6" />
-                        <span>0</span>
+                        <img src={commentPic} className="size-6" />
+                        <span>{comments.length}</span>
                     </div>
                 </div>
             </div>
@@ -86,14 +102,36 @@ export function Post() {
                     rows={1}
                     className="flex-1 resize-none bg-transparent outline-none text-lg text-gray-300 placeholder-gray-500"
                 />
-<button className="text-sm font-bold border border-white/40 rounded-full px-4 py-1 hover:text-black hover:bg-white cursor-pointer transition-colors duration-300 ease-in-out">
-    Post
-</button>
+                <button onClick={Comment}
+                    className="text-sm font-bold border border-white/40 rounded-full px-4 py-1 hover:text-black hover:bg-white cursor-pointer transition-colors duration-300 ease-in-out">
+                    Post
+                </button>
             </div>
 
-            <div className="p-4">
-                <h2 className="font-bold text-lg">View comments (0)</h2>
+            <div className="p-4   border-gray-400/15">
+                <h2 className="font-bold text-lg">View comments ({comments.length})</h2>
             </div>
+
+            {comments.map((c, index) => (
+                <div key={index} className="flex flex-col gap-3 p-4 border-b border-gray-400/15">
+                    <div className="flex items-center gap-2">
+                        <img src={c.user.pictureURL} className="size-8 rounded-full object-cover object-center"/>
+                        <span className="font-semibold">{c.user.username}</span>
+                        <span className="text-[#565565] text-sm">• 15 hours ago</span>
+                    </div>
+                    <p className="text-sm ml-1">{c.comment}</p>
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1.5">
+                            <img src={commentLike} className="size-6 cursor-pointer hover:opacity-60"/>
+                            <span className="text-sm text-gray-400">0</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 cursor-pointer hover:opacity-60">
+                            <img src={reply} className="size-6"/>
+                            <span className="text-sm text-gray-400">reply</span>
+                        </div>
+                    </div>
+                </div>
+            ))}
         </div>
     )
 }

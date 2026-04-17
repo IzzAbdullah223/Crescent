@@ -17,12 +17,14 @@ model User {
   posts            Post[]
   likes            Like[]
   comments Comment[]
+  commentLikes CommentLike[]
   sentMessages     Message[] @relation("SentMessages")
   receivedMessages Message[] @relation("ReceivedMessages")
   friends          User[]    @relation("UserFriends")
   friendOf         User[]    @relation("UserFriends")
   followers        Follow[]  @relation("Followers")
   following        Follow[]  @relation("Following")
+
 }
 model Post {
   id         Int      @id @default(autoincrement())
@@ -63,11 +65,25 @@ model Follow {
   @@unique([followerId, followingId])
 }
 
-model Comment{
-  id Int @id @default(autoincrement())
-  CommenterId Int 
-  comment String
-  PostId Int
-  user User @relation(fields:[CommenterId],references: [id])
-  post Post @relation(fields:[PostId],references: [id])
+model Comment {
+  id          Int       @id @default(autoincrement())
+  date        DateTime  @default(now())
+  comment     String
+  commenterId Int
+  postId      Int
+  parentId    Int?
+  user        User      @relation(fields: [commenterId], references: [id])
+  post        Post      @relation(fields: [postId], references: [id])
+  parent      Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies     Comment[] @relation("CommentReplies")
+  likes       CommentLike[]
+}
+
+model CommentLike {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  commentId Int
+  user      User    @relation(fields: [userId], references: [id])
+  comment   Comment @relation(fields: [commentId], references: [id])
+  @@unique([userId, commentId])
 }

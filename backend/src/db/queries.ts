@@ -267,3 +267,31 @@ export async function unfollowUser(followerId: number, followingId: number) {
         where: { followerId, followingId }
     })
 }
+
+ 
+export async function postComment(postId: number, commenterId: number, comment: string) {
+    return prisma.comment.create({
+        data: {
+            commenterId: commenterId,
+            postId: postId,
+            comment: comment
+        }
+    })
+}
+ 
+export async function getComments(postId:number){
+    return await prisma.comment.findMany({
+        where:{postId:postId},
+        include:{
+            user:{
+                select:{
+                    id:true,
+                    username:true,
+                    displayname:true,
+                    pictureURL:true,
+                }
+            }
+        }
+    })
+}
+

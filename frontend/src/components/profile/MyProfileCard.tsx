@@ -60,7 +60,7 @@ const githubWatch = watch('github')
         formData.append('image', file)
         formData.append('userId', String(currentUserId))
         const response = await changeProfilePicture(formData)
-          console.log(response)
+ 
     }
 
     const onSubmit = async (data:TProfileSchema) => {
