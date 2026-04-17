@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import {type user} from '../../lib/types'
-import { getUserID } from '../../services/userServices';
+import { getUserID, changeProfilePicture} from '../../services/userServices';
 import edit from '../../assets/edit(1).svg'
 import check from '../../assets/check.svg'
 import github from '../../assets/github.svg'
@@ -15,16 +15,12 @@ import { DotLoader } from 'react-spinners'
 export function MyProfileCard(){
     const currentUserId= Number(localStorage.getItem('currentUserId'))
     const[userData,setUserData] = useState<user>()
- 
+    const fileInputRef = useRef<HTMLInputElement>(null)
 
     const[editingName,setEditingName] = useState(false)
     const[editingBio,setEditingBio] = useState(false)
     const[editingWebsite,setEditingWebsite] = useState(false)
     const[editingGithubLink,setEditingGithubLink] = useState(false)
-
-
-
- 
 
   const [error, setError] = useState(false)
   const {
@@ -37,7 +33,6 @@ export function MyProfileCard(){
   } = useForm<TProfileSchema>({
     resolver: zodResolver(profileSchema)
   })
- 
 
 const displayNameWatch = watch('displayName')
 const bioWatch = watch('bio')
@@ -48,6 +43,7 @@ const githubWatch = watch('github')
         const response = await getUserID(currentUserId)
         if(response.status===200){
             const responseData:user = await response.json()
+            console.log(responseData)
             setValue('displayName',responseData.displayname)
             setValue('bio',responseData.bio)
             setValue('website',responseData.website)
@@ -56,18 +52,26 @@ const githubWatch = watch('github')
         }
     }
 
+    const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+        if (fileInputRef.current) fileInputRef.current.value = ""
+        const formData = new FormData()
+        formData.append('image', file)
+        formData.append('userId', String(currentUserId))
+        const response = await changeProfilePicture(formData)
+          console.log(response)
+    }
+
     const onSubmit = async (data:TProfileSchema) => {
             setEditingName(false)
             setEditingBio(false)
             setEditingWebsite(false)
             setEditingGithubLink(false)
            const response = await updateProfile(data)
-           // later on get a toast library and show a success message on successful update and an error message on failure instead of just logging to console
            if(response.status===200){
             user()
            }
-
-           //and maybe also show an error message if the update fails for some reason url name not in range etc
     }
 
     useEffect(()=>{
@@ -77,7 +81,23 @@ const githubWatch = watch('github')
     return(
         <form className='flex flex-col gap-7  border-b border-gray-400/15 p-4' onSubmit={handleSubmit(onSubmit)}>
             <div className='flex items-center mb-5 gap-15 mt-3  '> 
-                <img src={userData?.pictureURL} className="size-30 rounded-full"/> 
+                <div className="relative w-fit">
+                    <img src={userData?.pictureURL} className="size-30 rounded-full object-cover object-center"/> 
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        className="hidden"
+                        accept="image/*"
+                        onChange={handleFileSelect}
+                    />
+                    <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="absolute bottom-0 right-0 bg-[#2a2a2a] rounded-full p-1.5 cursor-pointer hover:opacity-80"
+                    >
+                        <img src={edit} className="size-4"/>
+                    </button>
+                </div>
 
                 <div className='flex flex-col items-center ml-10 gap-4 w-60'>
 
@@ -86,7 +106,6 @@ const githubWatch = watch('github')
                     {editingName?
                         <div className='flex ml-5 -mt-4'>
                             <input
-                           
                             {...register('displayName')}
                              type='text'  
                              className='outline-gray-400/65 outline rounded-xs  
@@ -120,7 +139,6 @@ const githubWatch = watch('github')
 
             <div className='flex flex-col text-sm gap-3'> 
 
-              
                 <div className='flex gap-2 items-center'>
                     {editingBio ? (
                         <>
@@ -138,7 +156,6 @@ const githubWatch = watch('github')
                     )}
                 </div>
 
-        
                 <div className='flex gap-2 items-center'>
                     <img src={global} className='size-6'/>
                     {editingWebsite ? (
@@ -157,7 +174,6 @@ const githubWatch = watch('github')
                     )}
                 </div>
                 
-               
                 <div className='flex gap-2 items-center  '>
                     <img src={github} className='size-6'/>
                     {editingGithubLink ? (
@@ -166,8 +182,6 @@ const githubWatch = watch('github')
                             {...register('github')}
                              className='outline-gray-400/65 outline rounded-xs text-xs px-2 w-90'/>
                             <img src={check} className='cursor-pointer hover:opacity-40' onClick={()=>setEditingGithubLink(false)}/>
-
-                        
                         </>
                     ) : (
                         <>

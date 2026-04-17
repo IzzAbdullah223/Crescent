@@ -69,3 +69,18 @@ export async function updateProfile(data:TProfileSchema){
 
     return response
 }
+
+export async function changeProfilePicture(formData:FormData){
+    const token = localStorage.getItem('token')
+    const userId = formData.get('userId')
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${userId}/picture`,{
+        method:'PATCH',
+        headers:{
+            'Authorization':`Bearer ${token}`
+        },
+        body:formData
+ 
+    })
+    console.log(response)
+    return response
+}

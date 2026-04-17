@@ -1,6 +1,7 @@
 import {type Request, type Response} from 'express'
 import * as db from '../db/queries.js'
 import {profileSchema } from '../db/lib/types.js'
+import cloudinary from '../config/cloudinary.js'
 
 export async function getUser(req: Request, res: Response) {
 
@@ -69,6 +70,30 @@ export async function getUserByID(req: Request, res: Response) {
     }
 }
 
+
+export async function changeProfilePicture(req:Request,res:Response){
+    const userId = Number(req.params.id)
+    let imageUrl:string =''
+ 
+     try{
+        if (req.file) {
+                const cloudinaryResult = await cloudinary.uploader.upload(req.file.path, {
+                resource_type: "image"
+            })
+              imageUrl = cloudinaryResult.secure_url
+            }
+                await db.changeProfilePicture(userId,imageUrl)
+                return res.status(200).json({
+                    message:"success"
+                })
+    }catch(e){
+        return res.status(200).json({
+            message:"Failure"
+        })
+    }
+    
+}
+
 export async function updateProfile(req:Request,res:Response){
     if(!req.user){
         return res.status(401).json({
@@ -97,7 +122,4 @@ export async function updateProfile(req:Request,res:Response){
         console.error(err)
         return res.status(500).json({ error: 'Internal server error' })
     }
-
-
- 
 }
