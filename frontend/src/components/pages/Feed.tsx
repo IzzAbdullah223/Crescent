@@ -6,6 +6,7 @@ import redHeart from '../../assets/redHeart.svg'
 import comments from '../../assets/comment2.svg'
 import { Link } from 'react-router-dom'
 import { getPosts,likePost,unlikePost } from '../../services/postServices'
+import { useNavigate } from 'react-router-dom'
 import { type feedData } from '../../lib/types'
  
 
@@ -22,7 +23,7 @@ export function Feed(){
     const[feed,setFeed]=useState<feedData[]>([])
 
 
-
+    const navigate = useNavigate()
     const user = async ()=>{
 
         const response = await getUser()
@@ -30,7 +31,7 @@ export function Feed(){
          if(response.status===200){
 
             const responseData:user = await response.json()
-            console.log(responseData)
+           
             setCurrentUser(responseData)
           
          }
@@ -40,7 +41,7 @@ export function Feed(){
         const response = await getPosts()
         if(response.status===200){
             const responseData:feedData[] = await response.json()
-            console.log(responseData)
+         
             setFeed(responseData)
         }
     }
@@ -75,11 +76,15 @@ export function Feed(){
             </div>
 
             {feed.map((post,index)=>(
-            <div className='flex flex-col gap-4 hover:bg-white/10 pb-10 p-4 cursor-pointer' key={index}> 
+            <div    className='flex flex-col gap-4 hover:bg-white/10 pb-10 p-4 cursor-pointer' key={index}   onClick={() =>
+             navigate(`/posts/${post.id}`, {
+            state: { post }
+            })
+            }> 
 
             <div className='flex items-center gap-2'>
                 <img src={post.poster?.pictureURL} className=' mr-2 size-8 rounded-full object-cover object-center'/>
-                <Link to={`/user/${post.poster?.id}`} className='font-Alata hover:underline'>{post.poster?.username}</Link>
+                <Link to={`/user/${post.poster?.id}`} className='font-Alata hover:underline' onClick={(e)=>e.stopPropagation()}>{post.poster?.username}</Link>
                 <div className='text-[#565565] text-2xl'>•</div>
                 <div className='text-[#565565] text-balance'>15 hours ago</div>
             </div>

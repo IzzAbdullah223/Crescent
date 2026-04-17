@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 import { updateProfile } from '../../services/userServices';
 import {type TProfileSchema, profileSchema} from '../../lib/types'
 import { DotLoader } from 'react-spinners'
- 
+<DotLoader color="#ffffff" size={25}/>
 
 export function MyProfileCard(){
     const currentUserId= Number(localStorage.getItem('currentUserId'))

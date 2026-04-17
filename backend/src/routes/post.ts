@@ -1,5 +1,5 @@
 import Router from 'express'
-import { createPost,getPosts, likePost,unlikePost,getLikedPosts,getUserPosts } from '../controllers/postController.js'
+import { createPost,getPosts, likePost,unlikePost,getLikedPosts,getUserPosts,getPostComments } from '../controllers/postController.js'
 import { verifyToken } from '../controllers/authController.js';
 import { upload } from '../middleware/multer.js';
  
@@ -10,6 +10,7 @@ export const postRouter = Router()
 postRouter.get('/post',getPosts)
 postRouter.get('/posts/liked',verifyToken,getLikedPosts)
 postRouter.get('/posts/:id',verifyToken,getUserPosts)
+postRouter.get('/posts/:id/comments',verifyToken,getPostComments)
 postRouter.post('/post',verifyToken,upload.single('media'),createPost)
 postRouter.post('/post/like',verifyToken,likePost)
  

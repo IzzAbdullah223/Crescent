@@ -16,6 +16,7 @@ model User {
   githubLink       String    @default("")
   posts            Post[]
   likes            Like[]
+  comments Comment[]
   sentMessages     Message[] @relation("SentMessages")
   receivedMessages Message[] @relation("ReceivedMessages")
   friends          User[]    @relation("UserFriends")
@@ -33,6 +34,7 @@ model Post {
   poster     User     @relation(fields: [posterId], references: [id])
   posterId   Int
   likes      Like[]
+  comments Comment[]
 }
 model Like {
   id     Int  @id @default(autoincrement())
@@ -59,4 +61,13 @@ model Follow {
   follower    User @relation("Following", fields: [followerId], references: [id])
   following   User @relation("Followers", fields: [followingId], references: [id])
   @@unique([followerId, followingId])
+}
+
+model Comment{
+  id Int @id @default(autoincrement())
+  CommenterId Int 
+  comment String
+  PostId Int
+  user User @relation(fields:[CommenterId],references: [id])
+  post Post @relation(fields:[PostId],references: [id])
 }

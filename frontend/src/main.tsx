@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter,RouterProvider,Navigate } from 'react-router-dom'
@@ -16,6 +16,8 @@ import { LikedPosts } from './components/pages/LikedPosts'
 import { Settings } from './components/pages/Settings'
 import { Chat } from './components/pages/Chat'
 import { Messages } from './components/pages/Messages'
+import { Post } from './components/pages/Posts'
+import { SkeletonTheme } from 'react-loading-skeleton'
 //import CrescentPanel from './components/ui/CrescentPanel'
 
 
@@ -38,15 +40,16 @@ const router = createBrowserRouter([
     { path: "profile", element: <Profile Card={<MyProfileCard />} /> },
     {path:"settings", element:<Settings/>},
     {path:"chat",element:<Chat/>},
-    {path:"chat/:id",element:<Messages/>}
+    {path:"chat/:id",element:<Messages/>},
+    {path:"/posts/:id",element:<Post/>}
   ]
 }
 ])
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <RouterProvider router={router}/>
-  </StrictMode>,
+    <SkeletonTheme baseColor='#313131' highlightColor='#525252'> 
+      <RouterProvider router={router}/>
+    </SkeletonTheme>
 )
 
  

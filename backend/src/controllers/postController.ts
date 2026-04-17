@@ -128,3 +128,16 @@ export async function unlikePost(req:Request,res:Response){
     }
     
 }
+
+export async function getPostComments(req:Request,res:Response){
+    console.log(req.params.id)
+    console.log("hi")
+        if(!req.user){
+        return res.status(401).json({
+            message:"Unauthorized"
+        })
+    }
+    
+    return res.status(200)
+
+}
