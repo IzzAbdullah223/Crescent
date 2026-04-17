@@ -68,7 +68,7 @@ export function UserProfileCard(){
                             <span className="text-[#e7e7eb] text-md">Following</span>
                         </div>
                         <div>
-                            <div className="font-bold text-center">0</div>
+                            <div className="font-bold text-center">{userData?._count?.posts ?? 0}</div>
                             <span className="text-[#e7e7eb] text-md">Posts</span>
                         </div>
                     </div>

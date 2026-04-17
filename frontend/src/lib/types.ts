@@ -39,6 +39,9 @@ export type user={
     website:string,
     followers: Follow[]
     following: Follow[]
+    _count:{
+        posts:number
+    }
 }
 
 export type postData={

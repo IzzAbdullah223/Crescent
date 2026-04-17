@@ -2,11 +2,9 @@ generator client {
   provider = "prisma-client"
   output   = "../src/db/generated/prisma"
 }
-
 datasource db {
   provider = "postgresql"
 }
-
 model User {
   id               Int       @id @default(autoincrement())
   username         String    @unique
@@ -22,10 +20,9 @@ model User {
   receivedMessages Message[] @relation("ReceivedMessages")
   friends          User[]    @relation("UserFriends")
   friendOf         User[]    @relation("UserFriends")
-  followers  Follow[] @relation("Followers")  // people following this user
-  following  Follow[] @relation("Following")  // people this user follows
+  followers        Follow[]  @relation("Followers")
+  following        Follow[]  @relation("Following")
 }
-
 model Post {
   id         Int      @id @default(autoincrement())
   date       DateTime @default(now())
@@ -37,33 +34,29 @@ model Post {
   posterId   Int
   likes      Like[]
 }
-
 model Like {
   id     Int  @id @default(autoincrement())
   userId Int
   postId Int
   user   User @relation(fields: [userId], references: [id])
   post   Post @relation(fields: [postId], references: [id])
-
   @@unique([userId, postId])
 }
-
 model Message {
-  id          Int      @id @default(autoincrement())
-  date        DateTime @default(now())
-  content     String?
-  imageUrl    String?
-  sender      User     @relation("SentMessages", fields: [senderId], references: [id])
-  senderId    Int
-  recipent    User?    @relation("ReceivedMessages", fields: [recipentId], references: [id])
-  recipentId  Int?
+  id         Int      @id @default(autoincrement())
+  date       DateTime @default(now())
+  content    String?
+  imageUrl   String?
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+  senderId   Int
+  recipent   User?    @relation("ReceivedMessages", fields: [recipentId], references: [id])
+  recipentId Int?
 }
-
-model Follow{
+model Follow {
   id          Int  @id @default(autoincrement())
   followerId  Int
   followingId Int
-  follower    User @relation("Followers", fields: [followerId], references: [id])
-  following   User @relation("Following", fields: [followingId], references: [id])
+  follower    User @relation("Following", fields: [followerId], references: [id])
+  following   User @relation("Followers", fields: [followingId], references: [id])
   @@unique([followerId, followingId])
 }

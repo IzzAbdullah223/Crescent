@@ -133,6 +133,7 @@ export async function followUser(req: Request, res: Response) {
         await db.followUser(followerId, followingId)
         return res.status(200).json({ message: "success" })
     } catch(e) {
+        console.log(e)
         return res.status(500).json({ message: "error" })
     }
 }
@@ -145,6 +146,7 @@ export async function unfollowUser(req: Request, res: Response) {
         await db.unfollowUser(followerId, followingId)
         return res.status(200).json({ message: "success" })
     } catch(e) {
+        console.log(e)
         return res.status(500).json({ message: "error" })
     }
 }

@@ -12,7 +12,6 @@ export function Profile({Card}:{Card:React.ReactNode}){
     const currentUserId= Number(localStorage.getItem('currentUserId'))
 
     const { id } = useParams()
-
  
     const[userPostsData,setUserPostsData] = useState<feedData[]>([])
 
@@ -21,7 +20,8 @@ export function Profile({Card}:{Card:React.ReactNode}){
  
 
     const userPosts = async () =>{
-        const response = await getUserPosts(userId)
+        const targetUserId = Number.isNaN(userId)? currentUserId : userId
+        const response = await getUserPosts(targetUserId)
         if(response.status===200){
             const responseData:feedData[] = await response.json()
             setUserPostsData(responseData)
@@ -40,10 +40,9 @@ export function Profile({Card}:{Card:React.ReactNode}){
     }
 
 
-    useEffect(()=>{
-            userPosts()
-      
-    },[])
+    useEffect(() => {
+        userPosts()
+    }, [id])
 
     return(
         <div className=" overflow-y-auto   flex-1  font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">

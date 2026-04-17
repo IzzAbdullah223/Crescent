@@ -59,6 +59,10 @@ export async function findUserByID(id:number){
             website:true,
             githubLink:true,
             followers:true,
+            following:true,
+            _count: {
+                select: { posts: true }
+            }
         }
     })
     return user
@@ -119,6 +123,7 @@ export async function getPosts(){
 }
 
 export async function getUserPosts(userId:number){
+   
     return await prisma.post.findMany({
         where:{posterId:userId},
         include:{
