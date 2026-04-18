@@ -13,6 +13,34 @@ export async function signUp(username:string,fName:string,password:string){
 }
 
 
+export async function getLatestUsers() {
+    return await prisma.user.findMany({
+        orderBy: { id: 'desc' },
+        take: 3,
+        select: {
+            id: true,
+            username: true,
+            displayname: true,
+            pictureURL: true,
+            followers: true
+        }
+    })
+}
+
+export async function getMostFollowedUsers() {
+    return await prisma.user.findMany({
+        orderBy: { followers: { _count: 'desc' } },
+        take: 3,
+        select: {
+            id: true,
+            username: true,
+            displayname: true,
+            pictureURL: true,
+            followers: true
+        }
+    })
+}
+
 export async function getUser(username:string){
     const user = await prisma.user.findUnique({
         where:{username:username},
@@ -124,6 +152,30 @@ export async function getPosts(){
             }
         }
         
+    })
+}
+
+export async function getFollowingPosts(userId: number) {
+    return await prisma.post.findMany({
+        where: {
+            poster: {
+                followers: {
+                    some: { followerId: userId }
+                }
+            }
+        },
+        include: {
+            poster: {
+                select: { id: true, username: true, displayname: true, pictureURL: true }
+            },
+            likes: {
+                select: { userId: true, postId: true }
+            },
+            _count: {
+                select: { comments: true }
+            }
+        },
+        orderBy: { date: 'desc' }
     })
 }
 

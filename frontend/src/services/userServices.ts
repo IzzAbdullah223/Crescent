@@ -44,6 +44,24 @@ export async function getUsers(){
 
 }
 
+export async function getLatestUsers() {
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/users/latest`, {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` }
+    })
+    return response
+}
+
+export async function getMostFollowedUsers() {
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/users/most-followed`, {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` }
+    })
+    return response
+}
+
 export async function searchUser(query:string){
     const token = localStorage.getItem('token') 
     const response = await fetch(`${import.meta.env.VITE_API_URL}/users?username=${query}`,{

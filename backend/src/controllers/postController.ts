@@ -54,6 +54,17 @@ export async function getPosts(req:Request,res:Response){
     }
 }
 
+export async function getFollowingPosts(req: Request, res: Response) {
+    if (!req.user) return res.status(401).json({ message: "Unauthorized" })
+    const userId = req.user.id
+    try {
+        const posts = await db.getFollowingPosts(userId)
+        return res.status(200).json(posts)
+    } catch (err) {
+        return res.status(500).json({ message: "Internal server error" })
+    }
+}
+
 export async function getUserPosts(req:Request,res:Response){
     const userId = Number(req.params.id)
     try{

@@ -1,10 +1,11 @@
 import Router from 'express'
-import { createPost, getPosts, likePost, unlikePost, getLikedPosts, getUserPosts, getComments, postComment, postReply, likeComment, unlikeComment } from '../controllers/postController.js'
+import { createPost, getPosts, likePost, unlikePost, getLikedPosts, getUserPosts, getComments, postComment, postReply, likeComment, unlikeComment,getFollowingPosts } from '../controllers/postController.js'
 import { verifyToken } from '../controllers/authController.js'
 import { upload } from '../middleware/multer.js'
 
 export const postRouter = Router()
 postRouter.get('/post', getPosts)
+postRouter.get('/posts/following', verifyToken, getFollowingPosts)
 postRouter.get('/posts/liked', verifyToken, getLikedPosts)
 postRouter.get('/post/:id/comments', verifyToken, getComments)
 postRouter.get('/posts/:id', verifyToken, getUserPosts)

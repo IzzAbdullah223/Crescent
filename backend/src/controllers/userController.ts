@@ -30,6 +30,24 @@ export async function getUser(req: Request, res: Response) {
 
 }
 
+export async function getLatestUsers(req: Request, res: Response) {
+    try {
+        const users = await db.getLatestUsers()
+        return res.status(200).json(users)
+    } catch (err) {
+        return res.status(500).json({ message: "Internal server error" })
+    }
+}
+
+export async function getMostFollowedUsers(req: Request, res: Response) {
+    try {
+        const users = await db.getMostFollowedUsers()
+        return res.status(200).json(users)
+    } catch (err) {
+        return res.status(500).json({ message: "Internal server error" })
+    }
+}
+
 export async function searchUsers(req: Request, res: Response) {
     if(!req.user){
         return res.status(401).json({
