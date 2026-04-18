@@ -116,6 +116,11 @@ export async function getPosts(){
                     userId:true,
                     postId:true,
                 }
+            },
+            _count:{
+                select:{
+                    comments:true
+                }
             }
         }
         

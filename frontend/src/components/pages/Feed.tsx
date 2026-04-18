@@ -32,6 +32,7 @@ export function Feed(){
         const response = await getPosts()
         if(response.status === 200){
             const responseData: feedData[] = await response.json()
+            console.log(responseData)
             setFeed(responseData)
         }
         setLoading(false)
@@ -108,7 +109,7 @@ export function Feed(){
                             </div>
                             <div className='flex items-center gap-1.5'> 
                                 <img src={comments} className='size-6'/>
-                                <span>0</span>
+                                <span>{post._count.comments}</span>
                             </div>
                         </div>
                     </div>

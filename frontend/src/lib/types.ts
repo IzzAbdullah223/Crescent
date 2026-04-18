@@ -69,6 +69,9 @@ export type feedData={
         pictureURL:string
     }
     likes:Like[]
+    _count:{
+        comments:number
+    }
 }
 
 export type Message = {
