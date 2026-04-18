@@ -231,7 +231,7 @@ export async function getLikedPosts(userId:number){
             }
         }
      })
-    return posts.map(like=>like.post)
+    return posts.map(({ post }) => post)
 }
 
 
