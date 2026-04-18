@@ -18,6 +18,7 @@ import { Chat } from './components/pages/Chat'
 import { Messages } from './components/pages/Messages'
 import { Post } from './components/pages/Posts'
 import { SkeletonTheme } from 'react-loading-skeleton'
+import { AuthCallback } from './components/auth/Authcallback'
 //import CrescentPanel from './components/ui/CrescentPanel'
 
 
@@ -41,8 +42,12 @@ const router = createBrowserRouter([
     {path:"settings", element:<Settings/>},
     {path:"chat",element:<Chat/>},
     {path:"chat/:id",element:<Messages/>},
-    {path:"/posts/:id",element:<Post/>}
+    {path:"/posts/:id",element:<Post/>},
   ]
+},
+{
+  path:"/auth/callback",
+  element:<AuthCallback/>
 }
 ])
 

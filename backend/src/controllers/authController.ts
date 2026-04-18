@@ -53,16 +53,14 @@ export async function signUpPost(req:Request,res:Response){
      })
 }
 
-export async function logInPost(req:Request,res:Response){
-
-        const user=req.user
-        console.log(user)
-        jwt.sign({user:user},process.env.SECRET_KEY as Secret,{expiresIn: '24h'},(err: Error | null, token: string | undefined)=>{
-          res.json({
-                token,
-                currentUserId:user?.id
-          })
-        })
+export async function logInPost(req: Request, res: Response) {
+    const user = req.user
+    jwt.sign({ user }, process.env.SECRET_KEY as Secret, { expiresIn: '24h' }, (err, token) => {
+        if (req.path.includes('callback')) {
+            return res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}&userId=${user?.id}`)
+        }
+        res.json({ token, currentUserId: user?.id })
+    })
 }
 
 

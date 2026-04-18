@@ -9,7 +9,8 @@ model User {
   id               Int       @id @default(autoincrement())
   username         String    @unique
   displayname      String
-  password         String
+  googleId         String? @unique
+  password         String?
   pictureURL       String    @default("https://res.cloudinary.com/dic5sskvu/image/upload/v1771032844/defaultAvatar_szkhjs.webp")
   bio              String    @default("")
   website          String    @default("")
