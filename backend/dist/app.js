@@ -22,7 +22,13 @@ io.on('connection', (socket) => {
         socket.leave(roomId);
     });
 });
-app.use(cors());
+app.use(cors({
+    origin: [
+        'http://localhost:5173',
+        'https://crescent-nu.vercel.app'
+    ],
+    credentials: true
+}));
 app.use(express.json());
 app.use('/', authRouter);
 app.use('/', userRouter);
