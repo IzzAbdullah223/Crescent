@@ -8,7 +8,7 @@ import redHeart from '../../assets/redHeart.svg'
 import comments from '../../assets/comment2.svg'
 import { type feedData } from '../../lib/types'
 import { DotLoader } from 'react-spinners'
-//<DotLoader color="#ffffff" size={25}/>
+import {motion} from 'framer-motion'
 
 export function Profile({Card}:{Card:React.ReactNode}){
     const currentUserId= Number(localStorage.getItem('currentUserId'))
@@ -28,6 +28,7 @@ export function Profile({Card}:{Card:React.ReactNode}){
         const response = await getUserPosts(targetUserId)
         if(response.status===200){
             const responseData:feedData[] = await response.json()
+            console.log(responseData)
             setUserPostsData(responseData)
         }
         setloading(false)
@@ -50,7 +51,11 @@ export function Profile({Card}:{Card:React.ReactNode}){
     }, [id])
 
 return(
-    <div className="overflow-y-auto flex-1 font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
+    <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.6 }}
+     className="overflow-y-auto flex-1 font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
         
         {loading ? (
             <div className="flex justify-center mt-10  ">
@@ -100,7 +105,7 @@ return(
 
                             <div className='flex items-center gap-1.5'> 
                                 <img src={comments} className='size-6'/>
-                                <span>0</span>
+                                <span>{post._count.comments}</span>
                             </div>
                         </div>
 
@@ -108,6 +113,6 @@ return(
                 ))}
             </>
         )}
-    </div>
+    </motion.div>
 )
 }

@@ -197,6 +197,11 @@ export async function getUserPosts(userId:number){
                     userId:true,
                     postId:true,
                 }
+            },
+            _count:{
+                select:{
+                    comments:true
+                }
             }
         }
     })

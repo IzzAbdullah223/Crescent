@@ -3,6 +3,7 @@ import { useState,useEffect  } from 'react'
 import {type user} from '../../lib/types'
 import { searchUser } from '../../services/userServices'
 import { Link } from 'react-router-dom'
+import {motion} from 'framer-motion'
 
 export function Search(){
     
@@ -33,7 +34,11 @@ export function Search(){
    
 
     return(
-        <div className=" overflow-y-auto   flex-1  font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
+        <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.6 }}
+         className=" overflow-y-auto   flex-1  font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
                 <div className='flex items-center p-3 py-8  gap-3'> 
                     <img src={search} className="size-6  "/>
                     <input
@@ -63,7 +68,7 @@ export function Search(){
                   
 
  
-        </div>
+        </motion.div>
     )
  
 }

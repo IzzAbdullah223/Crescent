@@ -10,7 +10,8 @@ import { useForm } from 'react-hook-form'
 import { updateProfile } from '../../services/userServices';
 import {type TProfileSchema, profileSchema} from '../../lib/types'
 import { DotLoader } from 'react-spinners'
-<DotLoader color="#ffffff" size={25}/>
+import {motion} from 'framer-motion'
+ 
 
 export function MyProfileCard(){
     const currentUserId= Number(localStorage.getItem('currentUserId'))
@@ -59,7 +60,7 @@ const githubWatch = watch('github')
         const formData = new FormData()
         formData.append('image', file)
         formData.append('userId', String(currentUserId))
-        const response = await changeProfilePicture(formData)
+        await changeProfilePicture(formData)
  
     }
 
@@ -80,7 +81,11 @@ const githubWatch = watch('github')
 
     return(
         <form className='flex flex-col gap-7  border-b border-gray-400/15 p-4' onSubmit={handleSubmit(onSubmit)}>
-            <div className='flex items-center mb-5 gap-15 mt-3  '> 
+            <motion.div
+    initial={{ y: 10 }}
+    animate={{ y: 0 }}
+    transition={{ duration: 0.6 }}
+             className='flex items-center mb-5 gap-15 mt-3  '> 
                 <div className="relative w-fit">
                     <img src={userData?.pictureURL} className="size-30 rounded-full object-cover object-center"/> 
                     <input
@@ -135,7 +140,7 @@ const githubWatch = watch('github')
                         </div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
             <div className='flex flex-col text-sm gap-3'> 
 

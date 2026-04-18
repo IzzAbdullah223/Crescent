@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import leftArrow from '../../assets/arrow-left(1).svg'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import {motion} from 'framer-motion'
 
 export function Chat() {
     const [friends, setFriends] = useState<user[]>([])
@@ -25,7 +26,11 @@ export function Chat() {
     }, [])
 
     return (
-        <div className="overflow-y-auto flex-1 font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
+        <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.6 }}
+         className="overflow-y-auto flex-1 font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
             <div className="flex gap-8 items-center text-[1.2rem] border-b border-gray-400/15 p-4">
                 <Link to="/search" className='hover:bg-white/10 rounded-full p-1'>
                     <img src={leftArrow} className="size-6 cursor-pointer" />
@@ -65,6 +70,6 @@ export function Chat() {
                     </Link>
                 ))
             )}
-        </div>
+        </motion.div>
     )
 }

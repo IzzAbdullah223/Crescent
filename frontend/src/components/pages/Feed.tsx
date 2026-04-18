@@ -7,17 +7,13 @@ import comments from '../../assets/comment2.svg'
 import { Link } from 'react-router-dom'
 import { getPosts, getFollowingPosts, likePost, unlikePost } from '../../services/postServices'
 import { useNavigate } from 'react-router-dom'
-import { type feedData } from '../../lib/types'
+import { type feedData, type SidebarUser  } from '../../lib/types'
+ 
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import {motion} from 'framer-motion'
 
-type SidebarUser = {
-    id: number
-    username: string
-    displayname: string
-    pictureURL: string
-    followers: { followerId: number }[]
-}
+ 
 
 export function Feed() {
     const currentUserId = Number(localStorage.getItem('currentUserId'))
@@ -92,7 +88,11 @@ export function Feed() {
     }, [])
 
     return (
-        <div className='flex flex-row w-full'>
+        <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+         className='flex flex-row w-full'>
             {/* Feed */}
             <div className="flex-1 min-w-0 overflow-y-auto font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
                 <div className="flex items-center justify-center gap-4 text-[1.2rem] border-b border-gray-400/15 w-full p-4">
@@ -223,6 +223,6 @@ export function Feed() {
                     <p className="text-sm text-gray-400">Last updated: 24 Nov 2024</p>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }

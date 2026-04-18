@@ -7,6 +7,7 @@ import close from '../../assets/close.svg'
 import { createPost } from "../../services/postServices"
 import {type postData} from '../../lib/types'
 import { useRef } from "react"
+import {motion} from 'framer-motion'
 
 export function CreatePost(){
  
@@ -87,7 +88,11 @@ export function CreatePost(){
  
 
     return(
-        <div className=" overflow-y-auto   flex-1  font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
+        < motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.6 }}
+         className=" overflow-y-auto   flex-1  font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
             <form
               onSubmit={(e)=>handleSubmit(e)}
               onKeyDown={(e)=>{
@@ -174,6 +179,6 @@ export function CreatePost(){
 
 
  
-        </div>
+        </motion.div>
     )
 }

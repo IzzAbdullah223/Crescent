@@ -116,3 +116,12 @@ export type Reply = {
         pictureURL: string
     }
 }
+
+
+export type SidebarUser = {
+    id: number
+    username: string
+    displayname: string
+    pictureURL: string
+    followers: { followerId: number }[]
+}
