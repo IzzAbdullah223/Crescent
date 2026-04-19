@@ -1,11 +1,10 @@
 <svg width="680" height="680" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg">
-  <title>Crescent silver gold network logo</title>
+  <title>Crescent black gold network logo</title>
   <defs>
-    <radialGradient id="moonS" cx="32%" cy="28%" r="68%">
-      <stop offset="0%"   stop-color="#f5f5f5"/>
-      <stop offset="35%"  stop-color="#d0d0d0"/>
-      <stop offset="70%"  stop-color="#888"/>
-      <stop offset="100%" stop-color="#2a2a2a"/>
+    <radialGradient id="moonB" cx="32%" cy="28%" r="68%">
+      <stop offset="0%"   stop-color="#3a3a3a"/>
+      <stop offset="40%"  stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#000000"/>
     </radialGradient>
     <radialGradient id="nG1" cx="28%" cy="28%" r="72%">
       <stop offset="0%"   stop-color="#fff8cc"/>
@@ -23,7 +22,7 @@
     </mask>
   </defs>
 
-  <circle cx="300" cy="340" r="155" fill="url(#moonS)" mask="url(#cmask)"/>
+  <circle cx="300" cy="340" r="155" fill="url(#moonB)" mask="url(#cmask)"/>
 
   <circle cx="440" cy="175" r="24" fill="url(#nG1)" stroke="#ffd700" stroke-width="2"/>
   <circle cx="431" cy="166" r="8"  fill="#fffbe0" opacity="0.55"/>

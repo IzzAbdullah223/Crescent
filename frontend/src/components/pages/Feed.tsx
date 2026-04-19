@@ -139,7 +139,7 @@ export function Feed() {
                     feed.map((post, index) => (
                         <div className='flex flex-col gap-4 hover:bg-white/10 pb-10 p-4 cursor-pointer' key={index} onClick={() => navigate(`/posts/${post.id}`, { state: { post } })}>
                             <div className='flex items-center gap-2'>
-                                <img src={post.poster?.pictureURL} className='mr-2 size-8 rounded-full object-cover object-center' />
+                                <img src={post.poster?.pictureURL} className='mr-2 size-10 rounded-full object-cover object-center' />
                                 <Link to={`/user/${post.poster?.id}`} className='font-Alata hover:underline' onClick={(e) => e.stopPropagation()}>{post.poster?.username}</Link>
                                 <div className='text-[#565565] text-2xl'>•</div>
                                 <div className='text-[#565565] text-balance'>{timeAgo(post.date)}</div>
@@ -180,8 +180,8 @@ export function Feed() {
                             <div key={sidebarUser.id} className="flex items-center gap-3">
                                 <img src={sidebarUser.pictureURL} className="size-9 rounded-full object-cover object-center shrink-0" />
                                 <div className="flex flex-col min-w-0 flex-1">
-                                    <span className="text-sm font-semibold truncate">{sidebarUser.username}</span>
-                                    <span className="text-xs text-gray-400 truncate">{sidebarUser.displayname}</span>
+                                    <span className="text-md font-semibold truncate">{sidebarUser.username}</span>
+                                    <span className="text-sm text-gray-400 truncate">{sidebarUser.displayname}</span>
                                 </div>
                                 {sidebarUser.id !== currentUserId && (
                                     <button
@@ -203,8 +203,8 @@ export function Feed() {
                             <div key={sidebarUser.id} className="flex items-center gap-3">
                                 <img src={sidebarUser.pictureURL} className="size-9 rounded-full object-cover object-center shrink-0" />
                                 <div className="flex flex-col min-w-0 flex-1">
-                                    <span className="text-sm font-semibold truncate">{sidebarUser.username}</span>
-                                    <span className="text-xs text-gray-400 truncate">{sidebarUser.displayname}</span>
+                                    <span className=" text-md font-semibold truncate">{sidebarUser.username}</span>
+                                    <span className=" text-sm  text-gray-400 truncate">{sidebarUser.displayname}</span>
                                 </div>
                                 {sidebarUser.id !== currentUserId && (
                                     <button

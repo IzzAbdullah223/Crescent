@@ -10,7 +10,7 @@ export function FormPage({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen">
    
-      <div className="flex flex-col justify-center gap-4 items-center w-full panel:w-[45%] desk:w-[40%] shrink-0 bg-[#faf8f4] font-Inter px-8 overflow-y-auto p-4 pb-10">
+      <div className="flex flex-col justify-center gap-4 items-center w-full panel:w-[45%] desk:w-[40%] shrink-0 bg-[#ac966a2a] font-Inter px-8 overflow-y-auto p-4 pb-10">
         <motion.div
           key={pathname}
           initial={{ opacity: 0, y: 10 }}

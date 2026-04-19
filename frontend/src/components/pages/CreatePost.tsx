@@ -8,6 +8,7 @@ import { createPost } from "../../services/postServices"
 import {type postData} from '../../lib/types'
 import { useRef } from "react"
 import {motion} from 'framer-motion'
+import { useNavigate } from "react-router-dom"
 
 export function CreatePost(){
  
@@ -18,11 +19,12 @@ export function CreatePost(){
         githubRepo:'',
     })
 
+    const navigate = useNavigate()
     const [tagInput, setTagInput] = useState('')
     const [imagePreview, setImagePreview] = useState<string | undefined>(undefined)
     const [fileType,setFileType]=useState<string>()
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
-    
 
     const HandleImageUpload = async () => {
         fileInputRef.current?.click()
@@ -40,145 +42,131 @@ export function CreatePost(){
             ...prev,
             mediaURL:file
         }))
+    }
 
-  }
-
-
-   const handleCancelImage = () => {
+    const handleCancelImage = () => {
         if (imagePreview) URL.revokeObjectURL(imagePreview)
         setImagePreview(undefined)
-  }
+    }
 
-
-    const addTag=( )=>{
-
+    const addTag = () => {
         const tags = formData.tags ?? []
-
         if (!tagInput.trim()) return 
-
         if (tags.includes(tagInput)) return
-
         setFormData(prev => ({
             ...prev,
             tags: [...tags, tagInput]
         }))
-
     }
 
     const removeTag = (removedTag: string) => {
         setFormData(prev => ({
-        ...prev,
-        tags: (prev.tags ?? []).filter(tag => tag !== removedTag)
-    }))
-}
+            ...prev,
+            tags: (prev.tags ?? []).filter(tag => tag !== removedTag)
+        }))
+    }
     
-    const handleSubmit = async (e:React.FormEvent) =>{
+    const handleSubmit = async (e:React.FormEvent) => {
         e.preventDefault()
+        setIsSubmitting(true)
         const data = new FormData()
-        data.append("content",formData.content ?? "")
-        data.append("githubRepo",formData.githubRepo ?? "")
-        data.append("tags",JSON.stringify(formData.tags ?? []))
-        if(formData.mediaURL) data.append("media",formData.mediaURL)
+        data.append("content", formData.content ?? "")
+        data.append("githubRepo", formData.githubRepo ?? "")
+        data.append("tags", JSON.stringify(formData.tags ?? []))
+        if(formData.mediaURL) data.append("media", formData.mediaURL)
             
-         await  createPost(data)
-     
+        const response = await createPost(data)
+
+        if(response.status === 201){
+            navigate('/home')
+        }
+        setIsSubmitting(false)
     }
 
-
- 
-
     return(
-        < motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 0.6 }}
-         className=" overflow-y-auto   flex-1  font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="overflow-y-auto flex-1 font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
+            
             <form
-              onSubmit={(e)=>handleSubmit(e)}
-              onKeyDown={(e)=>{
-                if(e.key==="Enter"){
-                    e.preventDefault()
-                }
-            }} className="mt-12 px-6 flex flex-col gap-6"> 
-
-            <textarea 
-                placeholder="Share what's happening.."
-                className="text-lg overflow-hidden focus:outline-none resize-none mb-8"
-                 rows={1}
-                required 
-                value={formData.content}
-                maxLength={2000}
-                onChange={(e)=>{
-                    const text = e.currentTarget
-                    setFormData(prev=>({
-                        ...prev,
-                        content:e.target.value
-                    }))
-                    text.style.height="auto"
-                    text.style.height= text.scrollHeight + 'px'
+                onSubmit={(e) => handleSubmit(e)}
+                onKeyDown={(e) => {
+                    if(e.key === "Enter") e.preventDefault()
                 }}
-             />
+                className={`mt-12 px-6 flex flex-col gap-6 transition-opacity duration-300 ${isSubmitting ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}>
 
-            <div className={`relative mx-auto w-fit h-fit ${imagePreview ? "" : "hidden"}`}>
-                {fileType?.startsWith('video/')
-                    ? <video src={imagePreview} controls className="w-80 rounded-lg" />
-                    : <img className="w-80 rounded-lg" src={imagePreview} />
-                 }
-                <button type="button" onClick={handleCancelImage} className="absolute size-6 top-0 right-0 bg-dark-300 rounded-full p-1 cursor-pointer">
-                    <img src={close} />
-                </button>
-            </div>
+                <textarea 
+                    placeholder="Share what's happening.."
+                    className="text-lg overflow-hidden focus:outline-none resize-none mb-8"
+                    rows={1}
+                    required 
+                    value={formData.content}
+                    maxLength={2000}
+                    onChange={(e) => {
+                        const text = e.currentTarget
+                        setFormData(prev => ({
+                            ...prev,
+                            content: e.target.value
+                        }))
+                        text.style.height = "auto"
+                        text.style.height = text.scrollHeight + 'px'
+                    }}
+                />
 
-                <div  className="flex items-center gap-1"> 
-                    {(formData.tags?? []).map((tag,id) => (
-                        <div key={id} className="flex items-center gap-2 p-1 px-2.5 rounded-xl    bg-white/8 w-fit">
-                        <div>{tag}</div>
-                        <img src={x} className="size-3.5 hover:bg-gray-400 hover:rounded-full" onClick={()=>removeTag(tag)} />
-                    </div>
-                ))}
-                </div>
-
-
-             <div className="flex items-center justify-between mt-0"> 
-
-                <div className="flex items-center gap-3">
-                    <input type="file" ref={fileInputRef} className="hidden" accept="image/*,video/*" onChange={handleFileSelect} />
-                    <img src={clip} className="cursor-pointer" onClick={HandleImageUpload}/>
-                    <img src={tag} className=" cursor-pointer border-b-2  border-white pb-1"/>
-                    <img src={github} className="cursor-pointer"/>
-                </div>
-
-                <div className="flex items-center gap-2"> 
-                    <div>{formData.content?.length}/2000</div>
-                    <button type="submit" className="bg-white text-black  rounded-full py-0.5 px-3.5 cursor-pointer hover:text-white hover:bg-[#E56C47]">Post</button>
-                </div>
-
-             </div>
-
- 
-
-             <div className="flex flex-col gap-4 pb-5"> 
-                <span>Tags:</span>
-                <input
-                value={tagInput}
-                onChange={(e)=>setTagInput(e.target.value)}
-                onKeyDown={(e)=>{
-                    if(e.key==="Enter"){
-                        addTag()
+                <div className={`relative mx-auto w-fit h-fit ${imagePreview ? "" : "hidden"}`}>
+                    {fileType?.startsWith('video/')
+                        ? <video src={imagePreview} controls className="w-80 rounded-lg" />
+                        : <img className="w-80 rounded-lg" src={imagePreview} />
                     }
-                }}
-                 type="text"
-                 placeholder="Please Enter to push a new tag."
-                 className="outline-1 outline-gray-400/60 rounded-2xl py-1.5 px-3 text-sm focus:outline-[#E56C47]"
-                 />
-             </div>
+                    <button type="button" onClick={handleCancelImage} className="absolute size-6 top-0 right-0 bg-dark-300 rounded-full p-1 cursor-pointer">
+                        <img src={close} />
+                    </button>
+                </div>
 
+                <div className="flex items-center gap-1"> 
+                    {(formData.tags ?? []).map((tag, id) => (
+                        <div key={id} className="flex items-center gap-2 p-1 px-2.5 rounded-xl bg-white/8 w-fit">
+                            <div>{tag}</div>
+                            <img src={x} className="size-3.5 hover:bg-gray-400 hover:rounded-full" onClick={() => removeTag(tag)} />
+                        </div>
+                    ))}
+                </div>
 
-             </form>
+                <div className="flex items-center justify-between mt-0"> 
+                    <div className="flex items-center gap-3">
+                        <input type="file" ref={fileInputRef} className="hidden" accept="image/*,video/*" onChange={handleFileSelect} />
+                        <img src={clip} className="cursor-pointer" onClick={HandleImageUpload}/>
+                        <img src={tag} className="cursor-pointer border-b-2 border-white pb-1"/>
+                        <img src={github} className="cursor-pointer"/>
+                    </div>
 
+                    <div className="flex items-center gap-2"> 
+                        <div>{formData.content?.length}/2000</div>
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="bg-white text-black rounded-full py-0.5 px-3.5 cursor-pointer hover:text-white hover:bg-[#E56C47] disabled:cursor-not-allowed">
+                            {isSubmitting ? 'Posting...' : 'Post'}
+                        </button>
+                    </div>
+                </div>
 
-
- 
+                <div className="flex flex-col gap-4 pb-5"> 
+                    <span>Tags:</span>
+                    <input
+                        value={tagInput}
+                        onChange={(e) => setTagInput(e.target.value)}
+                        onKeyDown={(e) => {
+                            if(e.key === "Enter") addTag()
+                        }}
+                        type="text"
+                        placeholder="Please Enter to push a new tag."
+                        className="outline-1 outline-gray-400/60 rounded-2xl py-1.5 px-3 text-sm focus:outline-[#E56C47]"
+                    />
+                </div>
+            </form>
         </motion.div>
     )
 }

@@ -30,3 +30,15 @@ export async function logIn(data: { username: string; password: string }){
     return response;
 }
 
+export async function guestLogin() {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            username: 'GuestUser',
+            password: 'guest445'  
+        })
+    })
+    return response
+}
+

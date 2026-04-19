@@ -11,7 +11,7 @@ export async function createPost(data:FormData){
         },
         body:data
     })
-    console.log(response)
+ 
     return response
 }
 
