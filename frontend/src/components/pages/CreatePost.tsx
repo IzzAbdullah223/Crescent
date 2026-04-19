@@ -80,8 +80,8 @@ export function CreatePost(){
         data.append("tags",JSON.stringify(formData.tags ?? []))
         if(formData.mediaURL) data.append("media",formData.mediaURL)
             
-        const response = await  createPost(data)
-        console.log(response)
+         await  createPost(data)
+     
     }
 
 

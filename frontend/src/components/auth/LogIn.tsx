@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { logIn } from '../../services/authServices'
+import { DotLoader } from 'react-spinners'
 
 export function LogIn(){
 
@@ -8,6 +9,7 @@ export function LogIn(){
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [error,setError] = useState(false)
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -20,6 +22,9 @@ export function LogIn(){
             localStorage.setItem('currentUserId', String(data.currentUserId))
             navigate('/home')
         }
+        else{
+            setError(true)
+        }
         setIsSubmitting(false)
     }
     
@@ -31,12 +36,18 @@ export function LogIn(){
             <input type='password' placeholder='Password' value={password} onChange={e => setPassword(e.target.value)}
                 className='p-2 px-4 rounded-3xl focus:outline-none bg-[#2b2a33]' />
             <button disabled={isSubmitting} className='p-2 rounded-3xl bg-black text-white cursor-pointer hover:bg-white hover:text-black hover:outline-2 text-sm'>
-                {isSubmitting ? 'Logging in...' : 'Log in'}
+                {isSubmitting ? 'Logging in....' : 'Log in'}
             </button>
             <button type='button' onClick={() => navigate('/global')}
                 className='cursor-pointer p-2 rounded-3xl [background:linear-gradient(to_right,#000,#c8a96e)] hover:[background:#fff] hover:text-black hover:outline-1 text-sm transition-all duration-700'>
                 Guest User
             </button>
+            {isSubmitting?
+            <div className='flex justify-center mt-5 mb-5'> 
+             <DotLoader color="#6b7280" size={30} />
+             </div>
+             :''}
+             
         </form>
     )
 

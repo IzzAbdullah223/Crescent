@@ -2,6 +2,7 @@ import crescent from '../../assets/crescent.svg'
 import { getUser } from '../../services/userServices'
 import { useEffect,useState } from 'react'
 import {type user} from '../../lib/types'
+import { Link } from 'react-router-dom'
 export function Header(){
 
     const[data,setData]=  useState<user>()
@@ -33,9 +34,9 @@ export function Header(){
                 <img src={crescent} className='size-15'/>
                 <h1 className='text-lg'>Crescent </h1>
             </div>
-            <div className='p-3'>
+            <Link to={'/profile'} className='p-3'>
                 <img src={data?.pictureURL} className='size-10 rounded-full object-cover object-center'/>   
-            </div>
+            </Link>
         </div>
     )
 }

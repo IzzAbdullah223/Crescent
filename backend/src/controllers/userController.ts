@@ -22,7 +22,6 @@ export async function getUser(req: Request, res: Response) {
             return res.status(200).json(user)
 
     } catch (err) {
-        console.error(err)
         return res.status(500).json({ error: 'Internal server error' })
     }
 
@@ -83,7 +82,6 @@ export async function getUserByID(req: Request, res: Response) {
         }
         return res.status(200).json(user)
     } catch (err) {
-        console.error(err)
         return res.status(500).json({ error: 'Internal server error' })
     }
 }
@@ -137,7 +135,6 @@ export async function updateProfile(req:Request,res:Response){
         })
     }
     catch(err){
-        console.error(err)
         return res.status(500).json({ error: 'Internal server error' })
     }
 }
@@ -151,7 +148,6 @@ export async function followUser(req: Request, res: Response) {
         await db.followUser(followerId, followingId)
         return res.status(200).json({ message: "success" })
     } catch(e) {
-        console.log(e)
         return res.status(500).json({ message: "error" })
     }
 }
@@ -164,7 +160,6 @@ export async function unfollowUser(req: Request, res: Response) {
         await db.unfollowUser(followerId, followingId)
         return res.status(200).json({ message: "success" })
     } catch(e) {
-        console.log(e)
         return res.status(500).json({ message: "error" })
     }
 }

@@ -38,7 +38,6 @@ export async function signUpPost(req:Request,res:Response){
     const exisitngUser = await db.getUser(result.data.username)
 
     if(exisitngUser){
-        console.log("test")
         return res.status(400).json({errors:{username:"Username already exists"}})
     }
 

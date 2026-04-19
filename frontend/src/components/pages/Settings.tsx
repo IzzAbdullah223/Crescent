@@ -7,7 +7,6 @@ export function Settings(){
     const navigate = useNavigate()
    
     const logOut = () => {
-        console.log("TEST")
         localStorage.removeItem('currentUserId')
         localStorage.removeItem('token')
         navigate('/login')

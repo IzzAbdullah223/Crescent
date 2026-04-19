@@ -20,7 +20,6 @@ export function Search(){
         const response = await searchUser(searchQuery)
         if(response.status==200){
               const responseData:user[] = await response.json()
-              console.log(responseData)
               setQueryResult(responseData)
         }
        

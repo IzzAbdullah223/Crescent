@@ -220,7 +220,7 @@ export function Feed() {
                         <li>Added animations to loading pages</li>
                         <li>Added Skeleton Loading to home page</li>
                     </ul>
-                    <p className="text-sm text-gray-400">Last updated: 24 Nov 2024</p>
+                    <p className="text-sm text-gray-400">Last updated: 18 April 2026</p>
                 </div>
             </div>
         </motion.div>

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import loading from '../../assets/loading.svg'
 export function SignUp(){
 
+
   const navigate = useNavigate()
 
     const{

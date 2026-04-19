@@ -8,6 +8,7 @@ import redHeart from '../../assets/redHeart.svg'
 import commentPic from '../../assets/comment2.svg'
 import commentLike from '../../assets/commentLikes.svg'
 import replyIcon from '../../assets/reply.svg'
+ 
 
 export function Post() {
     const currentUserId = Number(localStorage.getItem('currentUserId'))
@@ -18,6 +19,7 @@ export function Post() {
     const [replyingToId, setReplyingToId] = useState<number | null>(null)
     const [replyText, setReplyText] = useState('')
     const [showRepliesMap, setShowRepliesMap] = useState<Record<number, boolean>>({})
+    const[loading,setLoading]=useState(false)
 
     const likePostHandler = async (postId: number) => {
         await likePost(postId)
@@ -164,7 +166,7 @@ export function Post() {
                 <div key={comment.id} className="flex flex-col gap-3 p-4 border-b border-gray-400/15">
                     <div className="flex items-center gap-2">
                         <img src={comment.user.pictureURL} className="size-8 rounded-full object-cover object-center" />
-                        <span className="font-semibold">{comment.user.username}</span>
+                        <Link to={`/user/${post.poster?.id}`} className="font-semibold hover:underline">{comment.user.username}</Link>
                         <span className="text-[#565565] text-sm">• 15 hours ago</span>
                     </div>
                     <p className="text-sm ml-1">{comment.comment}</p>

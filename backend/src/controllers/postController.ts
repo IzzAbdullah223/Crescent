@@ -32,7 +32,7 @@ export async function createPost(req:Request,res:Response){
         })
     }
     catch(err){
-        console.log(err)
+ 
         return res.status(500).json({
             message:"Internal server error"
         })
@@ -85,7 +85,7 @@ export async function getLikedPosts(req:Request,res:Response){
         })
     }
     const userId = Number(req.user.id)
-    console.log(userId)
+ 
     try{
         const posts = await db.getLikedPosts(userId)
         return res.status(200).json(posts)

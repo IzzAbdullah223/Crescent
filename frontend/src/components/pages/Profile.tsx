@@ -28,7 +28,6 @@ export function Profile({Card}:{Card:React.ReactNode}){
         const response = await getUserPosts(targetUserId)
         if(response.status===200){
             const responseData:feedData[] = await response.json()
-            console.log(responseData)
             setUserPostsData(responseData)
         }
         setloading(false)
