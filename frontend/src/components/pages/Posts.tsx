@@ -8,6 +8,7 @@ import redHeart from '../../assets/redHeart.svg'
 import commentPic from '../../assets/comment2.svg'
 import commentLike from '../../assets/commentLikes.svg'
 import replyIcon from '../../assets/reply.svg'
+import { timeAgo } from '../../lib/timeAgo'
  
 
 export function Post() {
@@ -167,7 +168,7 @@ export function Post() {
                     <div className="flex items-center gap-2">
                         <img src={comment.user.pictureURL} className="size-8 rounded-full object-cover object-center" />
                         <Link to={`/user/${post.poster?.id}`} className="font-semibold hover:underline">{comment.user.username}</Link>
-                        <span className="text-[#565565] text-sm">• 15 hours ago</span>
+                        <span className="text-[#565565] text-sm">• {timeAgo(post.date)}</span>
                     </div>
                     <p className="text-sm ml-1">{comment.comment}</p>
                     <div className="flex items-center gap-4">

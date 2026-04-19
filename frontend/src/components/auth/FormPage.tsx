@@ -9,7 +9,7 @@ export function FormPage({ children }: { children: React.ReactNode }) {
   const isSignup = pathname === '/signup'
   return (
     <div className="flex h-screen">
-      {/* Left panel */}
+   
       <div className="flex flex-col justify-center gap-4 items-center w-full panel:w-[45%] desk:w-[40%] shrink-0 bg-[#faf8f4] font-Inter px-8 overflow-y-auto p-4 pb-10">
         <motion.div
           key={pathname}
@@ -52,7 +52,7 @@ export function FormPage({ children }: { children: React.ReactNode }) {
         </div>
         <ContinueWithGoogle />
       </div>
-      {/* Right panel */}
+     
       <div className="hidden panel:flex flex-1">
         <CrescentPanel />
       </div>

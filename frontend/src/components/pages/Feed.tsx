@@ -7,13 +7,11 @@ import comments from '../../assets/comment2.svg'
 import { Link } from 'react-router-dom'
 import { getPosts, getFollowingPosts, likePost, unlikePost } from '../../services/postServices'
 import { useNavigate } from 'react-router-dom'
-import { type feedData, type SidebarUser  } from '../../lib/types'
- 
+import { type feedData, type SidebarUser } from '../../lib/types'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import {motion} from 'framer-motion'
-
- 
+import { motion } from 'framer-motion'
+import { timeAgo } from '../../lib/timeAgo'
 
 export function Feed() {
     const currentUserId = Number(localStorage.getItem('currentUserId'))
@@ -63,12 +61,20 @@ export function Feed() {
 
     const like = async (postId: number) => {
         await likePost(postId)
-        posts(currentFeed ? false : true)
+        setFeed(prev => prev.map(post =>
+            post.id === postId
+                ? { ...post, likes: [...post.likes, { id: Date.now(), userId: currentUserId, postId }] }
+                : post
+        ))
     }
 
     const unlike = async (postId: number) => {
         await unlikePost(postId)
-        posts(currentFeed ? false : true)
+        setFeed(prev => prev.map(post =>
+            post.id === postId
+                ? { ...post, likes: post.likes.filter(like => like.userId !== currentUserId) }
+                : post
+        ))
     }
 
     const handleFollow = async (userId: number) => {
@@ -89,10 +95,10 @@ export function Feed() {
 
     return (
         <motion.div
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6 }}
-         className='flex flex-row w-full'>
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className='flex flex-row w-full'>
             {/* Feed */}
             <div className="flex-1 min-w-0 overflow-y-auto font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
                 <div className="flex items-center justify-center gap-4 text-[1.2rem] border-b border-gray-400/15 w-full p-4">
@@ -136,7 +142,7 @@ export function Feed() {
                                 <img src={post.poster?.pictureURL} className='mr-2 size-8 rounded-full object-cover object-center' />
                                 <Link to={`/user/${post.poster?.id}`} className='font-Alata hover:underline' onClick={(e) => e.stopPropagation()}>{post.poster?.username}</Link>
                                 <div className='text-[#565565] text-2xl'>•</div>
-                                <div className='text-[#565565] text-balance'>15 hours ago</div>
+                                <div className='text-[#565565] text-balance'>{timeAgo(post.date)}</div>
                             </div>
 
                             {post.content && <p>{post.content}</p>}
@@ -166,8 +172,7 @@ export function Feed() {
 
             {/* sidebar */}
             <div className="hidden desk:flex desk:flex-col desk:w-[280px] desk:shrink-0 desk:p-4 desk:gap-4">
-
-                {/* latest*/}
+                {/* latest */}
                 <div className="border border-white/10 rounded-lg p-4">
                     <h1 className="border-b border-gray-400/20 pb-2 mb-3 font-bold text-[1.1rem]">Latest users</h1>
                     <div className="flex flex-col gap-3">
@@ -213,7 +218,7 @@ export function Feed() {
                     </div>
                 </div>
 
-                {/* annoucments*/}
+                {/* announcements */}
                 <div className="border border-white/10 rounded-lg p-4">
                     <h1 className="border-b border-gray-400/20 pb-2 mb-4 font-bold text-[1.1rem]">Announcements</h1>
                     <ul className="list-disc pl-4 mb-4 text-[#c4c2ce] flex flex-col gap-1 text-sm">

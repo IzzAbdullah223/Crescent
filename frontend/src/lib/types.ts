@@ -59,6 +59,7 @@ export type Like={
 
 export type feedData={
     id:number,
+    date:string
     content:string,
     mediaURL:string,
     tags:string[],
@@ -84,6 +85,7 @@ export type Message = {
 
 export type Comment = {
     id: number
+    date:string
     comment: string
     postId: number
     commenterId: number

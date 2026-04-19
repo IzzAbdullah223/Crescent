@@ -9,6 +9,7 @@ import comments from '../../assets/comment2.svg'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import {motion} from 'framer-motion'
+import { timeAgo } from '../../lib/timeAgo'
 
 export function LikedPosts(){
     const currentUserId = Number(localStorage.getItem('currentUserId'))
@@ -20,20 +21,25 @@ export function LikedPosts(){
         const response = await getLikedPosts()
         if(response.status === 200){
             const responseData: feedData[] = await response.json()
+            console.log(responseData)
             setLikedPosts(responseData)
         }
         setLoading(false)
     }
 
-    const like = async (postId: number) => {
-        await likePost(postId)
-        posts()
-    }
+const unlike = async (postId: number) => {
+    await unlikePost(postId)
+    setLikedPosts(prev => prev.filter(post => post.id !== postId))
+}
 
-    const unlike = async (postId: number) => {
-        await unlikePost(postId)
-        posts()
-    }
+const like = async (postId: number) => {
+    await likePost(postId)
+    setLikedPosts(prev => prev.map(post =>
+        post.id === postId
+            ? { ...post, likes: [...post.likes, { id: Date.now(), userId: currentUserId, postId }] }
+            : post
+    ))
+}
 
     useEffect(() => { posts() }, [])
 
@@ -78,7 +84,7 @@ export function LikedPosts(){
                             <img src={post.poster?.pictureURL} className='mr-2 size-8 rounded-full object-cover object-center'/>
                             <Link to={`/user/${post.poster?.id}`} className='font-Alata hover:underline'>{post.poster?.username}</Link>
                             <div className='text-[#565565] text-2xl'>•</div>
-                            <div className='text-[#565565] text-balance'>15 hours ago</div>
+                            <div className='text-[#565565] text-balance'>{timeAgo(post.date)}</div>
                         </div>
                         {post.content && <p>{post.content}</p>}
                         {post.mediaURL && (
@@ -96,7 +102,7 @@ export function LikedPosts(){
                             </div>
                             <div className='flex items-center gap-1.5'>
                                 <img src={comments} className='size-6'/>
-                                <span>0</span>
+                                <span>{post._count.comments}</span>
                             </div>
                         </div>
                     </div>

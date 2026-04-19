@@ -85,9 +85,9 @@ const githubWatch = watch('github')
     initial={{ y: 10 }}
     animate={{ y: 0 }}
     transition={{ duration: 0.6 }}
-             className='flex items-center mb-5 gap-15 mt-3  '> 
+             className='flex items-center mb-5 gap-15 mt-3 desk:justify-around    '> 
                 <div className="relative w-fit">
-                    <img src={userData?.pictureURL} className="size-30 rounded-full object-cover object-center"/> 
+                    <img src={userData?.pictureURL} className="size-30 desk:size-50 rounded-full object-cover object-center"/> 
                     <input
                         type="file"
                         ref={fileInputRef}
@@ -104,9 +104,9 @@ const githubWatch = watch('github')
                     </button>
                 </div>
 
-                <div className='flex flex-col items-center ml-10 gap-4 w-60'>
+                <div className='flex flex-col items-center ml-10 gap-4 w-60 desk:text-xl'>
 
-                    <h1 className="font-bold text-lg">{userData?.username}</h1>
+                    <h1 className="font-bold text-lg desk:text-xl">{userData?.username}</h1>
                             
                     {editingName?
                         <div className='flex ml-5 -mt-4'>
@@ -123,7 +123,7 @@ const githubWatch = watch('github')
                         </div>
                     }
 
-                    <div className='flex gap-4 text-[0.9rem]'>
+                    <div className='flex gap-4 text-[0.9rem] desk:text-[1.1rem]'>
                         <div>
                             <div className="font-bold text-center">{userData?.followers?.length ?? 0}</div>
                             <span className="text-[#e7e7eb] text-md">Followers</span>
@@ -142,14 +142,14 @@ const githubWatch = watch('github')
                 </div>
             </motion.div>
 
-            <div className='flex flex-col text-sm gap-3'> 
+            <div className='flex flex-col text-sm gap-3 desk:text-xl'> 
 
                 <div className='flex gap-2 items-center'>
                     {editingBio ? (
                         <>
                             <input
                             {...register('bio')}
-                             className='outline-gray-400/65 outline rounded-xs text-xs px-2 py-1.5 w-97.5'/>
+                             className='outline-gray-400/65 outline rounded-xs text-xs desk:text-lg px-2 py-1.5 w-97.5'/>
                             <img src={check} className='cursor-pointer hover:opacity-40' onClick={()=>setEditingBio(false)}/>
                         </>
                     ) : (
@@ -167,12 +167,14 @@ const githubWatch = watch('github')
                         <>
                             <input
                             {...register('website')}
-                             className='outline-gray-400/65 outline rounded-xs text-xs px-2 w-90'/>
+                             className='outline-gray-400/65 outline rounded-xs text-xs desk:text-lg px-2 w-90'/>
                             <img src={check} className='cursor-pointer hover:opacity-40' onClick={()=>setEditingWebsite(false)}/>
                         </>
                     ) : (
                         <>
-                            <div>{websiteWatch || userData?.website}</div>
+<a href={websiteWatch || userData?.website} target='_blank' rel='noreferrer' className='hover:underline text-[#c4c2ce]'>
+    {websiteWatch || userData?.website}
+</a>
                             <img src={edit} className='cursor-pointer hover:opacity-40' onClick={()=>setEditingWebsite(true)}/>
                             <div className='text-[#7c818f]'>website</div>
                         </>
@@ -185,12 +187,14 @@ const githubWatch = watch('github')
                         <>
                             <input
                             {...register('github')}
-                             className='outline-gray-400/65 outline rounded-xs text-xs px-2 w-90'/>
+                             className='outline-gray-400/65 outline rounded-xs text-xs desk:text-lg px-2 w-90'/>
                             <img src={check} className='cursor-pointer hover:opacity-40' onClick={()=>setEditingGithubLink(false)}/>
                         </>
                     ) : (
                         <>
-                            <div>{githubWatch || userData?.githubLink}</div>
+<a href={githubWatch || userData?.githubLink} target='_blank' rel='noreferrer' className='hover:underline text-[#c4c2ce]'>
+    {githubWatch || userData?.githubLink}
+</a>
                             <img src={edit} className='cursor-pointer hover:opacity-40' onClick={()=>setEditingGithubLink(true)}/>
                             <div className='text-[#7c818f]'>github</div>
                         </>

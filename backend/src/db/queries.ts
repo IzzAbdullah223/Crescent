@@ -226,8 +226,15 @@ export async function getLikedPosts(userId:number){
                             userId:true,
                             postId:true,
                         }
+                        
+                    },
+                    _count:{
+                        select:{
+                            comments:true
+                        }
                     }
                 }
+                
             }
         }
      })
