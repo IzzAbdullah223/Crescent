@@ -4,6 +4,7 @@ import { type TSignUpSchema, signUpSchema} from '../../lib/types';
 import { signUp } from '../../services/authServices';
 import { useNavigate } from 'react-router-dom';
 import loading from '../../assets/loading.svg'
+ 
 export function SignUp(){
 
 
