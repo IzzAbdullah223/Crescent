@@ -18,5 +18,13 @@
     --font-Google: "Google Sans Flex", sans-serif;
 }
 
+.Toastify__toast--info .Toastify__toast-icon svg {
+  fill: rgb(226, 128, 16);
+}
+
+.Toastify__toast--info .Toastify__progress-bar {
+  background: rgb(255, 123, 0);
+}
+
 
  

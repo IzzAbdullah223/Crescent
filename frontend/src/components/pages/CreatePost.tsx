@@ -9,6 +9,7 @@ import {type postData} from '../../lib/types'
 import { useRef } from "react"
 import {motion} from 'framer-motion'
 import { useNavigate } from "react-router-dom"
+import { toast } from 'react-toastify'
 
 export function CreatePost(){
  
@@ -78,6 +79,9 @@ export function CreatePost(){
         const response = await createPost(data)
 
         if(response.status === 201){
+            toast.success("Post created successfully",{
+                style:{background:"#fff",color:"#000"}
+            })
             navigate('/home')
         }
         setIsSubmitting(false)

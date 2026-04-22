@@ -18,11 +18,15 @@ import { Chat } from './components/pages/Chat'
 import { Messages } from './components/pages/Messages'
 import { Post } from './components/pages/Posts'
 import { SkeletonTheme } from 'react-loading-skeleton'
+import { ToastContainer, toast } from 'react-toastify' 
+import 'react-toastify/dist/ReactToastify.css'  
 import { AuthCallback } from './components/auth/Authcallback'
 
 
 
- 
+toast.info("Running on a free server - may take a moment to wake up!",{
+  autoClose:6000
+})
 
 const router = createBrowserRouter([
   { path: "/", element: <Navigate to="/signup"/> },
@@ -54,6 +58,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
     <SkeletonTheme baseColor='#313131' highlightColor='#525252'> 
       <RouterProvider router={router}/>
+      <ToastContainer position='top-center' theme='dark'/>
     </SkeletonTheme>
 )
 

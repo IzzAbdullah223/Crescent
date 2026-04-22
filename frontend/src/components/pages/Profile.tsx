@@ -6,6 +6,7 @@ import { getUserPosts, likePost, unlikePost } from '../../services/postServices'
 import likes from '../../assets/likes.svg'
 import redHeart from '../../assets/redHeart.svg'
 import comments from '../../assets/comment2.svg'
+import { useNavigate } from 'react-router-dom';
 import { type feedData } from '../../lib/types'
 import { DotLoader } from 'react-spinners'
 import { motion } from 'framer-motion'
@@ -17,6 +18,8 @@ export function Profile({ Card }: { Card: React.ReactNode }) {
     const [userPostsData, setUserPostsData] = useState<feedData[]>([])
     const [loading, setloading] = useState(false)
     const userId = Number(id)
+
+    const navigate = useNavigate()
 
     const userPosts = async () => {
         setloading(true)
@@ -76,7 +79,7 @@ export function Profile({ Card }: { Card: React.ReactNode }) {
                     {Card}
 
                     {userPostsData.map((post, index) => (
-                        <div className='flex flex-col gap-4 hover:bg-white/10 pb-10 p-4 cursor-pointer desk:text-lg' key={index}>
+                        <div className='flex flex-col gap-4 hover:bg-white/10 pb-10 p-4 cursor-pointer desk:text-lg '   key={index} onClick={() => navigate(`/posts/${post.id}`, { state: { post } })} >
                             <div className='flex items-center gap-2'>
                                 <img src={post.poster?.pictureURL} className='mr-2 size-8 rounded-full object-cover object-center' />
                                 <Link to={`/user/${post.poster?.id}`} className='font-Alata hover:underline'>

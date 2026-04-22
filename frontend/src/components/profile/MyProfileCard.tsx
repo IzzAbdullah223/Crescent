@@ -11,6 +11,7 @@ import { updateProfile } from '../../services/userServices';
 import {type TProfileSchema, profileSchema} from '../../lib/types'
 import { DotLoader } from 'react-spinners'
 import {motion} from 'framer-motion'
+import { toast } from 'react-toastify'
  
 
 export function MyProfileCard(){
@@ -71,6 +72,9 @@ const githubWatch = watch('github')
             setEditingGithubLink(false)
            const response = await updateProfile(data)
            if(response.status===200){
+            toast.success("Profile updated",{
+                style:{background:"#fff",color:"#000"}
+            })
             user()
            }
     }
