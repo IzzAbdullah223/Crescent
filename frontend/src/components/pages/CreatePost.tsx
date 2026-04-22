@@ -77,6 +77,7 @@ export function CreatePost(){
         if(formData.mediaURL) data.append("media", formData.mediaURL)
             
         const response = await createPost(data)
+        console.log(response)
 
         if(response.status === 201){
             toast.success("Post created successfully",{
