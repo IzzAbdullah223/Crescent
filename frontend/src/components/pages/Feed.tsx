@@ -224,8 +224,9 @@ export function Feed() {
                     <ul className="list-disc pl-4 mb-4 text-[#c4c2ce] flex flex-col gap-1 text-sm">
                         <li>Added animations to loading pages</li>
                         <li>Added Skeleton Loading to home page</li>
+                        <li>Installed react-toast library to display notifications</li>
                     </ul>
-                    <p className="text-sm text-gray-400">Last updated: 18 April 2026</p>
+                    <p className="text-sm text-gray-400">Last updated: 22 April 2026</p>
                 </div>
             </div>
         </motion.div>
