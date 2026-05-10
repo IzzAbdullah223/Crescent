@@ -26,5 +26,10 @@
   background: rgb(255, 123, 0);
 }
 
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #ffffff20 transparent;
+}
+
 
  

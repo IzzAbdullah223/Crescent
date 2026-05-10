@@ -1,19 +1,18 @@
 import { type TSignUpSchema } from "../lib/types";
 
-export async function signUp(data:TSignUpSchema){
- 
-     const response = await fetch(`${import.meta.env.VITE_API_URL}/signup`,{
-        method:"POST",
-        headers:{'Content-Type': 'application/json'},
+export async function signUp(data: TSignUpSchema) {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/signup`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
-     })
-
-    const responseData =  await response.json()
-    if(!response.ok){
-        return {success:false,errors:responseData.errors}
+    })
+    const responseData = await response.json()
+    if (!response.ok) {
+        return { success: false, errors: responseData.errors }
     }
-
-    return {success:true}
+    localStorage.setItem('token', responseData.token)
+    localStorage.setItem('currentUserId', responseData.currentUserId)
+    return { success: true }
 }
 
 export async function logIn(data: { username: string; password: string }){

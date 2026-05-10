@@ -21,35 +21,24 @@ interface TokenPayload {
 }
 
 
-export async function signUpPost(req:Request,res:Response){
+export async function signUpPost(req: Request, res: Response) {
+    const body: unknown = req.body
+    const result = signUpSchema.safeParse(body);
 
- 
- 
-     const body: unknown = req.body
-     const result = signUpSchema.safeParse(body);
-   
- 
-    if(!result.success){
-         return res.status(400).json({
-            success:"Failed to create account"
-         })
-        }
-
-    const exisitngUser = await db.getUser(result.data.username)
-
-    if(exisitngUser){
-        return res.status(400).json({errors:{username:"Username already exists"}})
+    if (!result.success) {
+        return res.status(400).json({ success: "Failed to create account" })
     }
+    const existingUser = await db.getUser(result.data.username)
+    if (existingUser) {
+        return res.status(400).json({ errors: { username: "Username already exists" } })
+    }
+    const hashedPassword = await bcrypt.hash(result.data.password, 10)
+    await db.signUp(result.data.username, result.data.displayname, hashedPassword)
 
-    const hashedPassword = await bcrypt.hash(result.data.password,10)
-    
-
-    await db.signUp(result.data.username,result.data.displayname,hashedPassword)
-
-
-     return res.status(200).json({
-        success:true
-     })
+    const newUser = await db.getUser(result.data.username)
+    jwt.sign({ user: newUser }, process.env.SECRET_KEY as Secret, { expiresIn: '24h' }, (err, token) => {
+        res.json({ token, currentUserId: newUser?.id })
+    })
 }
 
 export async function logInPost(req: Request, res: Response) {

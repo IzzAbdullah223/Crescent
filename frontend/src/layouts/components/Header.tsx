@@ -30,13 +30,13 @@ export function Header(){
  
 
     return(
-        <div className='flex items-center justify-between font-Alata border-b border-gray-400/20 p-1 '>
+        <div className='flex items-center justify-between font-Alata border-b border-gray-400/20 p-1  '>
             <Link to={'/home'} className='flex items-center gap-2'>
                 <img src={crescent} className=' size-18 tab:size-20'/>
                 <h1 className='tab:text-2xl text-xl'>Crescent </h1>
             </Link>
             <Link to={'/profile'} className='p-3'>
-                <img src={data?.pictureURL} className='size-13 rounded-full object-cover object-center'/>   
+                <img src={data?.pictureURL} className=' size-10 desk:size-12 tab:size-12 rounded-full object-cover object-center'/>   
             </Link>
         </div>
     )

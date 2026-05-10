@@ -1,9 +1,7 @@
-import e from "express";
 import { prisma } from "./lib/prisma.js";
  
 export async function signUp(username:string,fName:string,password:string){
-    
-     await prisma.user.create({
+    await prisma.user.create({
         data:{
             username:username,
             displayname:fName,
@@ -11,7 +9,6 @@ export async function signUp(username:string,fName:string,password:string){
         }
     })
 }
-
 
 export async function getLatestUsers() {
     return await prisma.user.findMany({
@@ -51,20 +48,15 @@ export async function getUser(username:string){
             pictureURL:true
         }
     })
-
     return user 
 }
 
-
-
 export async function SearchUserByUsername(username:string){
     const existingUser = await prisma.user.findMany({
-        where:{username:
-            {
-                contains:username,
-                mode:"insensitive"
-            }
-        },
+        where:{username:{
+            contains:username,
+            mode:"insensitive"
+        }},
         select:{
             id:true,
             username:true,
@@ -97,12 +89,11 @@ export async function findUserByID(id:number){
 }
 
 export async function changeProfilePicture(Id:number,image:string){
-     await prisma.user.update({
+    await prisma.user.update({
         where:{id:Id},
         data:{pictureURL:image}
-     })
+    })
 }
-
 
 export async function updateProfile(userId:number,displayName:string,bio?:string,website?:string,github?:string){
     await prisma.user.update({
@@ -150,8 +141,8 @@ export async function getPosts(){
                     comments:true
                 }
             }
-        }
-        
+        },
+        orderBy: { date: 'desc' }
     })
 }
 
@@ -180,7 +171,6 @@ export async function getFollowingPosts(userId: number) {
 }
 
 export async function getUserPosts(userId:number){
-   
     return await prisma.post.findMany({
         where:{posterId:userId},
         include:{
@@ -208,7 +198,7 @@ export async function getUserPosts(userId:number){
 }
 
 export async function getLikedPosts(userId:number){
-     const posts = await prisma.like.findMany({
+    const posts = await prisma.like.findMany({
         where:{userId:userId},
         include:{
             post:{
@@ -226,7 +216,6 @@ export async function getLikedPosts(userId:number){
                             userId:true,
                             postId:true,
                         }
-                        
                     },
                     _count:{
                         select:{
@@ -234,13 +223,11 @@ export async function getLikedPosts(userId:number){
                         }
                     }
                 }
-                
             }
         }
-     })
+    })
     return posts.map(({ post }) => post)
 }
-
 
 export async function likePost(userId:number,postId:number){
     await prisma.like.create({
@@ -279,7 +266,7 @@ export async function getUserFriends(userId: number) {
     return user!.friends
 }
 
-export async function addFriend(userId: number, friendId: number) { //right now this is one sided fix it later 
+export async function addFriend(userId: number, friendId: number) {
     await prisma.user.update({
         where: { id: userId },
         data: {
@@ -289,9 +276,6 @@ export async function addFriend(userId: number, friendId: number) { //right now 
         }
     })
 }
-
-
-
 
 export async function fetchDirectedMessages(senderId: number, recipientId: number) {
     return await prisma.message.findMany({
@@ -337,7 +321,6 @@ export async function unfollowUser(followerId: number, followingId: number) {
     })
 }
 
- 
 export async function postComment(postId: number, commenterId: number, comment: string) {
     return prisma.comment.create({
         data: {
@@ -353,7 +336,7 @@ export async function postComment(postId: number, commenterId: number, comment: 
         }
     })
 }
- 
+
 export async function getComments(postId:number){
     return await prisma.comment.findMany({
         where:{postId:postId},
@@ -377,7 +360,6 @@ export async function getComments(postId:number){
     })
 }
 
-
 export async function postReply(commentId: number, commenterId: number, comment: string, postId: number) {
     return await prisma.comment.create({
         data: { commenterId, postId, comment, parentId: commentId },
@@ -399,4 +381,3 @@ export async function unlikeComment(userId: number, commentId: number) {
         where: { userId, commentId }
     })
 }
-

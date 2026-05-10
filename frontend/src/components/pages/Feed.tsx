@@ -100,7 +100,7 @@ export function Feed() {
             transition={{ duration: 0.6 }}
             className='flex flex-row w-full'>
             {/* Feed */}
-            <div className="flex-1 min-w-0 overflow-y-auto font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15">
+            <div className=" feed-scroll flex-1 min-w-0 overflow-y-auto font-Inter tab:border-x tab:border-gray-400/15 desk:border-x desk:border-gray-400/15 desk:ml-10 ">
                 <div className="flex items-center justify-center gap-4 text-[1.2rem] border-b border-gray-400/15 w-full p-4">
                     <div
                         className={`cursor-pointer ${currentFeed ? 'border-b-[3px] border-[#e66c47] rounded-sm' : ''}`}
@@ -132,7 +132,7 @@ export function Feed() {
                         ))}
                     </div>
                 ) : feed.length === 0 && !currentFeed ? (
-                    <div className="flex items-center justify-center mt-8 text-gray-400 italic">
+                    <div className="flex items-center justify-center mt-8 text-gray-400 italic ">
                         <p>No posts from people you follow yet.</p>
                     </div>
                 ) : (
@@ -171,7 +171,7 @@ export function Feed() {
             </div>
 
             {/* sidebar */}
-            <div className="hidden desk:flex desk:flex-col desk:w-[280px] desk:shrink-0 desk:p-4 desk:gap-4">
+            <div className="hidden desk:flex desk:flex-col  desk:w-[clamp(200px,25vw,350px)]  desk:shrink-0 desk:p-4 desk:gap-4 ml-5">
                 {/* latest */}
                 <div className="border border-white/10 rounded-lg p-4">
                     <h1 className="border-b border-gray-400/20 pb-2 mb-3 font-bold text-[1.1rem]">Latest users</h1>
@@ -219,7 +219,7 @@ export function Feed() {
                 </div>
 
                 {/* announcements */}
-                <div className="border border-white/10 rounded-lg p-4">
+                <div className="rounded-lg p-4">
                     <h1 className="border-b border-gray-400/20 pb-2 mb-4 font-bold text-[1.1rem]">Announcements</h1>
                     <ul className="list-disc pl-4 mb-4 text-[#c4c2ce] flex flex-col gap-1 text-sm">
                         <li>Added animations to loading pages</li>
